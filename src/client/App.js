@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './app.css';
 import ReactImage from './react.png';
+import { MDBBtn } from "mdbreact";
+
 
 export default class App extends Component {
   state = { username: null };
@@ -16,6 +18,7 @@ export default class App extends Component {
     return (
       <div>
         <img src={ReactImage} alt="react" />
+        <MDBBtn color="primary">Primary</MDBBtn>
       </div>
     );
   }
