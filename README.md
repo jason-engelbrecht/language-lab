@@ -1,5 +1,9 @@
 # languagelab
 
+Setup:
+
+npm install - installs dependencies
+
 npm run dev - starts development server for react and node
 
 npm build - build for production
