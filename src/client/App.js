@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
-import './app.css';
-import ReactImage from './react.png';
-import { MDBBtn } from "mdbreact";
+import Routes from './components/Routes';
+import TopNavigation from './components/topNavigation';
+import SideNavigation from './components/sideNavigation';
+import Footer from './components/Footer';
+import './index.css';
 
-
-export default class App extends Component {
-  state = { username: null };
-
-  componentDidMount() {
-    /*fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));*/
-  }
-
-  render() {
-
-    return (
-      <div>
-        <img src={ReactImage} alt="react" />
-        <MDBBtn color="primary">Primary</MDBBtn>
-      </div>
-    );
-  }
-
-  /*
-  const { username } = this.state;
-  {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-  * */
+class App extends Component {
+    render() {
+        return (
+            <div className="flexible-content">
+                <TopNavigation />
+                <SideNavigation/>
+                <main id="content" className="p-5">
+                    <Routes />
+                </main>
+                <Footer />
+            </div>
+        );
+    }
 }
+
+export default App;
