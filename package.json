@@ -22,7 +22,8 @@
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "xlsx": "^0.15.5"
   },
   "devDependencies": {
     "@babel/node": "7.x",
