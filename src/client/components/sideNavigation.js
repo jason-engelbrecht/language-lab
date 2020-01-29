@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 const TopNavigation = () => {
     return (
         <div className="sidebar-fixed position-fixed ">
-            <h1 className="text-center text-primary mt-2 mb-5">
-                <a href="#" className="logo-wrapper waves-effect">
+            <h1 className="text-center text-primary mt-2 mb-4">
+                <a href="#" className="logo-wrapper">
                     <i className="fas fa-language"></i>
                 </a>
             </h1>
@@ -15,8 +15,8 @@ const TopNavigation = () => {
                 <NavLink exact={true} to="/" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1">
                         <p className="text-center">
-                            <MDBIcon icon="chart-pie" className=""/>
-                            Home
+                            <MDBIcon icon="chart-pie" className="mb-2" size="lg"/>
+                            <small>Home</small>
                         </p>
 
                     </MDBListGroupItem>
@@ -24,16 +24,16 @@ const TopNavigation = () => {
                 <NavLink to="/profile" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1">
                         <p className="text-center">
-                            <MDBIcon icon="user" className=""/>
-                            Profile
+                            <MDBIcon icon="user" className="mb-2" size="lg"/>
+                            <small>Profile</small>
                         </p>
                     </MDBListGroupItem>
                 </NavLink>
                 <NavLink to="/tables" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1">
                         <p className="text-center">
-                            <MDBIcon icon="cloud-upload-alt" className=""/>
-                            Upload
+                            <MDBIcon icon="cloud-upload-alt" className="mb-2" size="lg"/>
+                            <small>Upload</small>
                         </p>
                     </MDBListGroupItem>
                 </NavLink>

@@ -60,7 +60,7 @@ main {
 .list-group-item:hover {
   color: #49505B;
   text-decoration: none;
-  background-color: #f8f9fa
+  background-color: #F0F0F0
 }
 
 .list-group .active {
