@@ -6,7 +6,7 @@ class TopNavigation extends Component {
         return (
             <MDBNavbar className="flexible-navbar" light expand="md" scrolling>
                 <MDBNavbarBrand href="/">
-                    <h4 className="h4 text-primary">The Language Lab</h4>
+                    <h4 className="h4 our-text">The Language Lab</h4>
                 </MDBNavbarBrand>
             </MDBNavbar>
         );

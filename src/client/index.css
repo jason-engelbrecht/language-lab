@@ -27,8 +27,18 @@ main {
 
 .navbar-brand{
   margin-left: 15px;
-  color: #2196f3 !important;
+  /*color: #2196f3 !important;*/
+  color: #006625 !important;
 }
+
+.our-text {
+  color: #006625;
+}
+.our-text:hover{
+  color: #006625 !important;
+  filter: brightness(90%);
+}
+
 
 .sidebar-fixed {
   left: 0;
@@ -151,7 +161,8 @@ main {
 }
 
 .activeClass .list-group-item {
-  color: #007bff;
+  /*color: #007bff;*/
+  color: #006625;
   background-color: #F0F0F0 !important;
 }
 

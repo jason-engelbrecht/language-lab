@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 const TopNavigation = () => {
     return (
         <div className="sidebar-fixed position-fixed ">
-            <h1 className="text-center text-primary mt-2 mb-4">
-                <a href="#" className="logo-wrapper">
+            <h1 className="text-center our-text mt-2 mb-4">
+                <a href="#" className="">
                     <i className="fas fa-language"></i>
                 </a>
             </h1>
