@@ -36,7 +36,7 @@ main {
 }
 .our-text:hover{
   color: #006625 !important;
-  filter: brightness(90%);
+  filter: brightness(120%);
 }
 
 
@@ -162,7 +162,7 @@ main {
 
 .activeClass .list-group-item {
   /*color: #007bff;*/
-  color: #006625;
+  color: #006625 !important;
   background-color: #F0F0F0 !important;
 }
 
