@@ -4,9 +4,9 @@ import { MDBNavbar, MDBNavbarBrand } from 'mdbreact';
 class TopNavigation extends Component {
     render() {
         return (
-            <MDBNavbar className="flexible-navbar" light expand="md" scrolling>
+            <MDBNavbar className="flexible-navbar pl-2" light expand="md" fixed="top">
                 <MDBNavbarBrand href="/">
-                    <h4 className="h4 our-text">The Language Lab</h4>
+                    <h3 className="our-text"><i className="fas fa-language fa-lg mr-3"></i>The Language Lab</h3>
                 </MDBNavbarBrand>
             </MDBNavbar>
         );
