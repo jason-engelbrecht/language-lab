@@ -1,10 +1,12 @@
 import React from 'react'
 import { MDBRow, MDBCol, MDBView, MDBCard, MDBCardBody, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import FileUploadSection from "./sections/FileUploadSection";
 
 const TablesPage =  () => {
   return (
-    <>
+
       <MDBRow>
+        <FileUploadSection />
       <MDBCol md="12">
         <MDBCard className="mt-5">
           <MDBView className="gradient-card-header blue darken-2">
@@ -141,7 +143,6 @@ const TablesPage =  () => {
         </MDBCard>
       </MDBCol>
     </MDBRow>
-    </>
   )
 }
 

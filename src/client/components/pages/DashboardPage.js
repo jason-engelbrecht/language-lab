@@ -6,6 +6,7 @@ import TableSection from './sections/TableSection';
 import ChartSection1 from './sections/ChartSection1';
 import ChartSection2 from './sections/ChartSection2';
 import ModalSection from './sections/ModalSection';
+import FileUploadSection from "./sections/FileUploadSection";
 
 const DashboardPage =  () => {
   return (
