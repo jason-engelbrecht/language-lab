@@ -2,9 +2,8 @@ import React from 'react'
 import { MDBRow, MDBCol, MDBView, MDBCard, MDBCardBody, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 import FileUploadSection from "./sections/FileUploadSection";
 
-const TablesPage =  () => {
+const Uploads =  () => {
   return (
-
       <MDBRow>
         <FileUploadSection />
       <MDBCol md="12">
@@ -144,6 +143,6 @@ const TablesPage =  () => {
       </MDBCol>
     </MDBRow>
   )
-}
+};
 
-export default TablesPage;
+export default Uploads;

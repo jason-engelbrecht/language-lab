@@ -29,11 +29,11 @@ const TopNavigation = () => {
                         </p>
                     </MDBListGroupItem>
                 </NavLink>
-                <NavLink to="/tables" activeClassName="activeClass">
+                <NavLink to="/uploads" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1 text-elegant">
                         <p className="text-center">
                             <MDBIcon icon="cloud-upload-alt" className="mb-2" size="lg"/>
-                            <small className="font-weight-light">Upload</small>
+                            <small className="font-weight-light">Uploads</small>
                         </p>
                     </MDBListGroupItem>
                 </NavLink>
