@@ -1,14 +1,90 @@
 import React from 'react'
-import { MDBRow, MDBCol, MDBView, MDBCard, MDBCardBody, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import {
+  MDBRow,
+  MDBCol,
+  MDBView,
+  MDBCard,
+  MDBCardBody,
+  MDBTable,
+  MDBTableHead,
+  MDBTableBody,
+  MDBContainer
+} from 'mdbreact';
 import FileUploadSection from "./sections/FileUploadSection";
 
 const Uploads =  () => {
   return (
       <MDBRow>
-        <FileUploadSection />
+        <MDBContainer>
+          <h3>Student Class & Proficiency Data</h3>
+          <MDBRow>
+            <MDBCol size="6"><FileUploadSection /></MDBCol>
+            <MDBCol size="4">
+              <select className="browser-default custom-select">
+                <option>Choose Language</option>
+                <option value="1">German</option>
+                <option value="2">Japanese</option>
+                <option value="3">Spanish</option>
+                <option value="3">Chinese</option>
+                <option value="3">French</option>
+              </select>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+        <MDBContainer className="mt-4">
+          <h3>Student Language Lab Hours</h3>
+          <MDBRow>
+            <MDBCol size="6"><FileUploadSection /></MDBCol>
+            <MDBCol size="4">
+              <select className="browser-default custom-select">
+                <option>Choose Level of Support</option>
+                <option value="1">No Staffing</option>
+                <option value="2">Student Staffing</option>
+                <option value="3">Teacher Staffing</option>
+                <option value="3">Teacher & Student Staffing</option>
+              </select>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+        <MDBCol md="12">
+          {/*<h3 className="mt-5">Upload History</h3>*/}
+
+          <MDBCard className="mt-5">
+            <MDBView className="gradient-card-header green">
+              <h4 className="h4-responsive text-white">Upload History</h4>
+            </MDBView>
+            <MDBTable striped>
+              <MDBTableHead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Data</th>
+                </tr>
+              </MDBTableHead>
+              <MDBTableBody>
+                <tr>
+                  <td>1</td>
+                  <td>1/15/2020</td>
+                  <td>Proficiency Data</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>2/22/2020</td>
+                  <td>Lab Hours</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>2/23/2020</td>
+                  <td>Lab Hours</td>
+                </tr>
+              </MDBTableBody>
+            </MDBTable>
+          </MDBCard>
+        </MDBCol>
+
       <MDBCol md="12">
         <MDBCard className="mt-5">
-          <MDBView className="gradient-card-header blue darken-2">
+          <MDBView className="gradient-card-header green">
             <h4 className="h4-responsive text-white">Basic tables</h4>
           </MDBView>
           <MDBCardBody>
