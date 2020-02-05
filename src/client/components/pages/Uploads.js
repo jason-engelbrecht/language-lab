@@ -25,7 +25,7 @@ const Uploads =  () => {
             <MDBCardBody className="p-4">
               <div className="mb-4">
                 <p className="lead mb-2 ml-1">Student Class & Proficiency Data</p>
-                <FileUploadSection />
+                <FileUploadSection inputID="file1" />
               </div>
 
               <p className="lead mb-2 ml-1">Student Language Lab Hours</p>
@@ -51,7 +51,7 @@ const Uploads =  () => {
                 </MDBCol>
               </MDBRow>
               <div className="mb-4">
-                <FileUploadSection />
+                <FileUploadSection inputID="file2"/>
               </div>
             </MDBCardBody>
           </MDBCard>

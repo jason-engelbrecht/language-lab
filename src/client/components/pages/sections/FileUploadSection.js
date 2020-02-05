@@ -1,9 +1,9 @@
-import React, {Component, Fragment, useState } from "react";
+import React, {Fragment, useState } from "react";
 import axios from "axios";
 
-import {MDBCol, MDBRow} from "mdbreact";
-
-const FileUploadSection = () => {
+const FileUploadSection = (props) => {
+    // set the input tag id in component props
+    let inputID = props.inputID;
     // react hooks => generates methods?
     const [file, setFile] = useState(''); // sets default
     // sets the starting filename to "choose file"
@@ -41,19 +41,18 @@ const FileUploadSection = () => {
             <form className="input-group" onSubmit={onSubmit}>
                 <div className="custom-file">
                     {/*runs the 'onchange' function onchange*/}
-                    <input type="file" className="custom-file-input" id="inputGroupFile" onChange={onChange}/>
+                    <input type="file" className="custom-file-input" id={inputID} onChange={onChange}/>
                     {/* sets filename to the state of 'filename' variable */}
                     <label className="custom-file-label" htmlFor="inputGroupFile"
                            aria-describedby="inputGroupFileAddon">{filename}</label>
                 </div>
                 <div className="input-group-append">
                     <input type="submit" value="Upload"
-                           className="input-group-text btn-success" id="inputGroupFileAddon" />
+                           className="input-group-text btn-success" id={inputID + "FileAddon"} />
                 </div>
             </form>
         </Fragment>
     )
-
 };
 
 export default FileUploadSection;
