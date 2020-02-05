@@ -17,6 +17,7 @@
     "babel-polyfill": "^6.26.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "express-fileupload": "^1.1.6",
     "mdbreact": "^4.25.0",
     "node-sass-middleware": "^0.11.0",
     "prop-types": "^15.6.2",
