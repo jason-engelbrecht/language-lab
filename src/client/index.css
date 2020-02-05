@@ -9,6 +9,10 @@ body{
   background-color: #EDEDEE;
 }
 
+.empty {
+  height: 250px;
+}
+
 a{
   color: inherit;
 }

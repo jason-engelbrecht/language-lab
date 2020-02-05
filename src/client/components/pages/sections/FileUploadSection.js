@@ -38,21 +38,19 @@ const FileUploadSection = () => {
 
     return(
         <Fragment>
-            <MDBRow className="mb-4">
-                <form className="input-group mb-3" onSubmit={onSubmit}>
-                    <div className="custom-file">
-                        {/*runs the 'onchange' function onchange*/}
-                        <input type="file" className="custom-file-input" id="inputGroupFile" onChange={onChange}/>
-                        {/* sets filename to the state of 'filename' variable */}
-                        <label className="custom-file-label" htmlFor="inputGroupFile"
-                               aria-describedby="inputGroupFileAddon">{filename}</label>
-                    </div>
-                    <div className="input-group-append">
-                        <input type="submit" value="Upload"
-                               className="input-group-text btn-success" id="inputGroupFileAddon" />
-                    </div>
-                </form>
-            </MDBRow>
+            <form className="input-group" onSubmit={onSubmit}>
+                <div className="custom-file">
+                    {/*runs the 'onchange' function onchange*/}
+                    <input type="file" className="custom-file-input" id="inputGroupFile" onChange={onChange}/>
+                    {/* sets filename to the state of 'filename' variable */}
+                    <label className="custom-file-label" htmlFor="inputGroupFile"
+                           aria-describedby="inputGroupFileAddon">{filename}</label>
+                </div>
+                <div className="input-group-append">
+                    <input type="submit" value="Upload"
+                           className="input-group-text btn-success" id="inputGroupFileAddon" />
+                </div>
+            </form>
         </Fragment>
     )
 

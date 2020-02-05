@@ -1,10 +1,18 @@
 {
-  "name": "simple-react-full-stack",
-  "author": "Jason Engelbrecht",
+  "name": "lanugage-lab",
+  "authors": [
+    "Jason Engelbrecht",
+    "Kaephas Kain",
+    "Vera Mankong..",
+    "Alvin Nava"
+  ],
   "license": "MIT",
   "version": "1.0.0",
-  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
-  "main": "src/server/index.js",
+  "description": "Language Lab app for Green River Foreign Language Department.",
+  "main": "server.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "build": "webpack --mode production",
     "start": "npm run build && node src/server/index.js",
@@ -15,11 +23,9 @@
   "dependencies": {
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
-    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-fileupload": "^1.1.6",
     "mdbreact": "^4.25.0",
-    "node-sass-middleware": "^0.11.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
