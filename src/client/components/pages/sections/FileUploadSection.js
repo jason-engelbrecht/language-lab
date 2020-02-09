@@ -1,5 +1,7 @@
 import React, {Fragment, useState } from "react";
 import axios from "axios";
+import Message from './Message';
+import Progress from "./ProgressBar";
 
 const FileUploadSection = (props) => {
     // set the input tag id in component props
@@ -9,6 +11,8 @@ const FileUploadSection = (props) => {
     // sets the starting filename to "choose file"
     const [filename, setFilename] = useState('Choose File');
     const[uploadedFile, setUploadedFile] = useState({});
+    const [message, setMessage] = useState('');
+    const [uploadPercentage, setUploadPercentage] = useState(0);
 
     const onChange = e => {
         // html file input allows multiples so stores as an array
@@ -27,17 +31,32 @@ const FileUploadSection = (props) => {
             const res = await axios.post('/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: progressEvent => {
+                    setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)));
+                    // Clear after 10 seconds
+                    setTimeout(() => {
+                        setUploadPercentage(0);
+                        setFilename('');
+                    }, 10000);
                 }
             });
-            const {fileName, filePath} = res.data;
-            setUploadedFile( {fileName, filePath });
+            const {filename, filePath} = res.data;
+            setUploadedFile( { filename, filePath });
+            setMessage('File Uploaded: ' + filename);
+            console.log(res.data);
         } catch(err) {
-            console.log(err);
+            if(err.response.status === 500) {
+                setMessage('There was a problem with the server.');
+            } else {
+                setMessage(err.response.data.msg);
+            }
         }
     };
 
     return(
         <Fragment>
+            { message ? <Message msg={message}/> : null }
             <form className="input-group" onSubmit={onSubmit}>
                 <div className="custom-file">
                     {/*runs the 'onchange' function onchange*/}
@@ -50,7 +69,16 @@ const FileUploadSection = (props) => {
                     <input type="submit" value="Upload"
                            className="input-group-text btn-success" id={inputID + "FileAddon"} />
                 </div>
+
             </form>
+            { uploadPercentage !== 0 ?
+                <div className="row mt-2">
+                    <div className="col m-auto">
+                        <Progress percentage={uploadPercentage} />
+                    </div>
+                </div>
+                : null
+            }
         </Fragment>
     )
 };
