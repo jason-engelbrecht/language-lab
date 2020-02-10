@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "oldStart": "npm run build && node server.js",
-    "start": "npm run server",
+    "start": "npm run build && npm run server",
     "client": "webpack -wd",
     "server": "nodemon --exec babel-node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
