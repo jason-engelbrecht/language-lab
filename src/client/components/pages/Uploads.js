@@ -36,8 +36,8 @@ const Uploads =  () => {
                     <option value="1">German</option>
                     <option value="2">Japanese</option>
                     <option value="3">Spanish</option>
-                    <option value="3">Chinese</option>
-                    <option value="3">French</option>
+                    <option value="4">Chinese</option>
+                    <option value="5">French</option>
                   </select>
                 </MDBCol>
                 <MDBCol>
@@ -46,7 +46,7 @@ const Uploads =  () => {
                     <option value="1">No Staffing</option>
                     <option value="2">Student Staffing</option>
                     <option value="3">Teacher Staffing</option>
-                    <option value="3">Teacher & Student Staffing</option>
+                    <option value="4">Teacher & Student Staffing</option>
                   </select>
                 </MDBCol>
               </MDBRow>
