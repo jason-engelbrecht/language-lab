@@ -1,6 +1,11 @@
+/*
+    Closeable message component
+    TODO: adjust color: alert-info = light blue
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// customizable message text using property
 const Message = ({msg}) => {
     return (
         <div className="alert alert-info alert-dismissible fade show" role="alert">

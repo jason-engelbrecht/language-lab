@@ -10,7 +10,7 @@ const FileUploadSection = (props) => {
     const [file, setFile] = useState(''); // sets default
     // sets the starting filename to "choose file"
     const [filename, setFilename] = useState('Choose File');
-    const[uploadedFile, setUploadedFile] = useState({});
+    const [uploadedFile, setUploadedFile] = useState({});
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
 
