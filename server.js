@@ -3,9 +3,17 @@ import fileUpload from 'express-fileupload';
 import excelToJson from 'convert-excel-to-json';
 const path = require('path');
 const server = express();
+import mongoose from 'mongoose';
 
 server.use(express.static('public'), fileUpload());
 // server.use(express.static('dist'));
+
+mongoose.connect('mongodb://localhost:27017/LLTest', {useNewUrlParser: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log('connected');
+});
 
 server.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -37,13 +45,28 @@ server.post('/upload', (req, res) => {
             }
         });
 
-        //add file name to result object
-        const object = {
-            'filename': file.name,
+        //add file name to result object and add result data
+        const uploadData = {
+            filename: file.name,
             data: result.data
         };
+        console.log(uploadData);
 
-        console.log(object);
+        //create upload schema
+        let uploadSchema = new mongoose.Schema({
+            filename: String,
+            data: Array,
+            date: { type: Date, default: Date.now },
+        });
+
+        //create upload model w schema and collection
+        let Upload = mongoose.model('Test', uploadSchema, 'TestData');
+
+        //new upload object with data
+        const upload = new Upload(uploadData);
+
+        //upload to db and meow
+        upload.save().then(() => console.log('meow'));
 
         res.json({ filename: file.name, filePath: `/uploads/${file.name}`});
     })
