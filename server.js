@@ -1,5 +1,6 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import excelToJson from 'convert-excel-to-json';
 const path = require('path');
 const server = express();
 
@@ -9,8 +10,6 @@ server.use(express.static('public'), fileUpload());
 server.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
-
-import excelToJson from 'convert-excel-to-json';
 
 server.post('/upload', (req, res) => {
     if(req.files === null) {
@@ -37,7 +36,14 @@ server.post('/upload', (req, res) => {
                 '*': '{{columnHeader}}'
             }
         });
-        console.log(result);
+
+        //add file name to result object
+        const object = {
+            'filename': file.name,
+            data: result.data
+        };
+
+        console.log(object);
 
         res.json({ filename: file.name, filePath: `/uploads/${file.name}`});
     })
