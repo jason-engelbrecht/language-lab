@@ -6,14 +6,24 @@ const server = express();
 import mongoose from 'mongoose';
 
 server.use(express.static('public'), fileUpload());
-// server.use(express.static('dist'));
 
+//connect to mongo w mongoose
 mongoose.connect('mongodb://localhost:27017/LLTest', {useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log('connected');
 });
+
+//create upload schema
+let uploadSchema = new mongoose.Schema({
+    filename: String,
+    data: Array,
+    date: { type: Date, default: Date.now },
+});
+
+//create upload model w schema and collection
+let Upload = mongoose.model('Test', uploadSchema, 'TestData');
 
 server.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -52,21 +62,11 @@ server.post('/upload', (req, res) => {
         };
         // console.log(uploadData);
 
-        //create upload schema
-        let uploadSchema = new mongoose.Schema({
-            filename: String,
-            data: Array,
-            date: { type: Date, default: Date.now },
-        });
-
-        //create upload model w schema and collection
-        let Upload = mongoose.model('Test', uploadSchema, 'TestData');
-
         //new upload object with data
         const upload = new Upload(uploadData);
 
         //upload to db and meow
-        upload.save().then(() => console.log('meow'));
+        upload.save().then(() => console.log('uploaded...meow'));
 
         //find uploaded document
         Upload.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
