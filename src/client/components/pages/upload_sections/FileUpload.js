@@ -3,7 +3,7 @@ import axios from "axios";
 import Message from './Message';
 import Progress from "./ProgressBar";
 
-const FileUploadSection = (props) => {
+const FileUpload = (props) => {
     // set the input tag id in component props
     let inputID = props.inputID;
     // react hooks => generates methods?
@@ -83,4 +83,4 @@ const FileUploadSection = (props) => {
     )
 };
 
-export default FileUploadSection;
+export default FileUpload;

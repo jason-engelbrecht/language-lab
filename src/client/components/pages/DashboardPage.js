@@ -1,12 +1,12 @@
 import React from 'react';
 import { MDBRow } from 'mdbreact';
-import AdminCardSection1 from './sections/AdminCardSection1';
-import AdminCardSection2 from './sections/AdminCardSection2';
-import TableSection from './sections/TableSection';
-import ChartSection1 from './sections/ChartSection1';
-import ChartSection2 from './sections/ChartSection2';
-import ModalSection from './sections/ModalSection';
-import FileUploadSection from "./sections/FileUploadSection";
+import AdminCardSection1 from './example_sections/AdminCardSection1';
+import AdminCardSection2 from './example_sections/AdminCardSection2';
+import TableSection from './example_sections/TableSection';
+import ChartSection1 from './example_sections/ChartSection1';
+import ChartSection2 from './example_sections/ChartSection2';
+import ModalSection from './example_sections/ModalSection';
+import FileUpload from "./upload_sections/FileUpload";
 
 const DashboardPage =  () => {
   return (

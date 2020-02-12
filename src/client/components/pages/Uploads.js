@@ -2,15 +2,14 @@ import React, {Fragment} from 'react'
 import {
   MDBRow,
   MDBCol,
-  MDBView,
   MDBCard,
   MDBCardBody,
-  MDBTable,
-  MDBTableHead,
-  MDBTableBody,
-  MDBContainer, MDBCardHeader, MDBIcon
+  MDBCardHeader,
+  MDBIcon
 } from 'mdbreact';
-import FileUploadSection from "./sections/FileUploadSection";
+import FileUpload from "./upload_sections/FileUpload";
+import UploadPreview from './upload_sections/UploadPreview';
+import RecentUploads from './upload_sections/RecentUploads';
 
 const Uploads =  () => {
   return (
@@ -25,7 +24,7 @@ const Uploads =  () => {
             <MDBCardBody className="p-4">
               <div className="mb-4">
                 <p className="lead mb-2 ml-1">Student Class & Proficiency Data</p>
-                <FileUploadSection inputID="file1" />
+                <FileUpload inputID="file1" />
               </div>
 
               <p className="lead mb-2 ml-1">Student Language Lab Hours</p>
@@ -51,42 +50,23 @@ const Uploads =  () => {
                 </MDBCol>
               </MDBRow>
               <div className="mb-4">
-                <FileUploadSection inputID="file2"/>
+                <FileUpload inputID="file2"/>
               </div>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
 
         <MDBCol size="5" className="d-flex">
-          <MDBCard className="flex-fill">
-            <MDBCardHeader color="green">
-              <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
-            </MDBCardHeader>
-            <MDBCardBody>
-              <MDBTable hover borderless>
-                <MDBTableBody>
-                  <tr>
-                    <td><MDBIcon icon="check" className="mr-3 text-success"/>mygoodfile.xlsx</td>
-                    <td>02/05/2020</td>
-                  </tr>
-                  <tr>
-                    <td><MDBIcon icon="check" className="mr-3 text-success"/>anevenbetterfile.xlsx</td>
-                    <td>02/05/2020</td>
-                  </tr>
-                  <tr>
-                    <td><MDBIcon icon="check" className="mr-3 text-success"/>missionreport.xlsx</td>
-                    <td>02/04/2020</td>
-                  </tr>
-                  <tr>
-                    <td><MDBIcon icon="check" className="mr-3 text-success"/>mynewfile.xlsx</td>
-                    <td>02/04/2020</td>
-                  </tr>
-                </MDBTableBody>
-              </MDBTable>
-            </MDBCardBody>
-          </MDBCard>
+          <RecentUploads/>
         </MDBCol>
       </MDBRow>
+
+      <MDBRow className="mt-5">
+        <MDBCol>
+          <UploadPreview/>
+        </MDBCol>
+      </MDBRow>
+
       <div className="empty"></div>
     </Fragment>
   )
