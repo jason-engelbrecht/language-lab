@@ -50,7 +50,7 @@ server.post('/upload', (req, res) => {
             filename: file.name,
             data: result.data
         };
-        console.log(uploadData);
+        // console.log(uploadData);
 
         //create upload schema
         let uploadSchema = new mongoose.Schema({
@@ -67,6 +67,11 @@ server.post('/upload', (req, res) => {
 
         //upload to db and meow
         upload.save().then(() => console.log('meow'));
+
+        //find uploaded document
+        Upload.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
+            console.log(doc);
+        });
 
         res.json({ filename: file.name, filePath: `/uploads/${file.name}`});
     })
