@@ -10,6 +10,7 @@ import {
 import FileUpload from "./upload_sections/FileUpload";
 import UploadPreview from './upload_sections/UploadPreview';
 import RecentUploads from './upload_sections/RecentUploads';
+import Radio from './upload_sections/Radio';
 
 const Uploads =  () => {
   return (
@@ -20,38 +21,8 @@ const Uploads =  () => {
             <MDBCardHeader color="green">
               <h5 className="mb-1 font-weight-normal"><MDBIcon icon="cloud-upload-alt" className="mr-2" />New Upload</h5>
             </MDBCardHeader>
-
-            <MDBCardBody className="p-4">
-              <div className="mb-4">
-                <p className="lead mb-2 ml-1">Student Class & Proficiency Data</p>
-                <FileUpload inputID="file1" />
-              </div>
-
-              <p className="lead mb-2 ml-1">Student Language Lab Hours</p>
-              <MDBRow className="mb-4">
-                <MDBCol>
-                  <select className="browser-default custom-select">
-                    <option>Choose Language</option>
-                    <option value="1">German</option>
-                    <option value="2">Japanese</option>
-                    <option value="3">Spanish</option>
-                    <option value="4">Chinese</option>
-                    <option value="5">French</option>
-                  </select>
-                </MDBCol>
-                <MDBCol>
-                  <select className="browser-default custom-select">
-                    <option>Choose Level of Support</option>
-                    <option value="1">No Staffing</option>
-                    <option value="2">Student Staffing</option>
-                    <option value="3">Teacher Staffing</option>
-                    <option value="4">Teacher & Student Staffing</option>
-                  </select>
-                </MDBCol>
-              </MDBRow>
-              <div className="mb-4">
-                <FileUpload inputID="file2"/>
-              </div>
+            <MDBCardBody className="p-4 mt-3">
+              <Radio/>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
