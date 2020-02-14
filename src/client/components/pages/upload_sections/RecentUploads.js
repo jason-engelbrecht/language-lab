@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as api from '../../../api';
 import {
   MDBCard,
   MDBCardBody,
@@ -7,8 +8,25 @@ import {
   MDBTable,
   MDBTableBody,
 } from 'mdbreact';
-
 class RecentUploads extends Component {
+
+  //start state as null
+  state = null;
+
+  //use api endpoint to get recent uploads, setting state
+  getRecentUploads = () => {
+    api.fetchRecentUploads().then(recentUploads => {
+      this.setState({recentUploads});
+      console.log(recentUploads);
+    });
+  };
+
+  //after mounting get recent uploads
+  componentDidMount() {
+    this.getRecentUploads();
+    //do something w data
+  };
+
   render() {
     return (
       <MDBCard className="flex-fill">
