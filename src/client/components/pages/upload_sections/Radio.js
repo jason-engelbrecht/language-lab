@@ -59,7 +59,7 @@ class Radio extends Component {
                         containerClass='mr-1'
                         checked={status === 1}
                         onClick={(e) => this.radioHandler(1)}
-                    defaultChecked />
+                    />
                     <p className="lead mb-2 ml-1">Student Class & Proficiency Data</p>
 
                     <MDBInput className="ml-5"

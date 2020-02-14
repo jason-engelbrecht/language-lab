@@ -26,7 +26,7 @@ server.post('/upload', (req, res) => {
     const file = req.files.file;
 
     file.mv(`${__dirname}/uploads/${file.name}`, err => {
-        if(err) {
+        if (err) {
             console.error(err);
             return res.status(500).send(err);
         }
@@ -55,12 +55,28 @@ server.post('/upload', (req, res) => {
         const upload = new UploadModel(uploadData);
 
         //upload to db and meow
-        upload.save().then(() => console.log('uploaded...meow'));
+        async function showUploaded() {
+            await upload.save().then(() => console.log('uploaded...meow'));
+            let q = UploadModel.find().sort({'date' : -1}).limit(1);
+            q.exec(function(error, doc) {
+                console.log("This works!");
+                console.log(doc);
+            });
+        }
+        showUploaded();
 
+        // TODO remove after confirmation of functionality
         //find uploaded document - this doesn't actually return the last uploaded doc?
-        UploadModel.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
-            console.log(doc);
-        });
+        // UploadModel.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
+        //     console.log(doc);
+        // });
+        //
+        // UploadModel.find({}, { sort : { 'date' : -1 }}, { limit : 1 }, function (err, doc) {
+        //     console.log("Second statement works?");
+        //     console.log(doc);
+        // });
+
+
 
         res.json({ filename: file.name, filePath: `/uploads/${file.name}`});
     })
