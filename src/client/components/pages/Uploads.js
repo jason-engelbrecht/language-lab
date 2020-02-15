@@ -21,7 +21,7 @@ const Uploads =  () => {
             <MDBCardHeader color="green">
               <h5 className="mb-1 font-weight-normal"><MDBIcon icon="cloud-upload-alt" className="mr-2" />New Upload</h5>
             </MDBCardHeader>
-            <MDBCardBody className="p-4 mt-3">
+            <MDBCardBody className="p-4 mt-2">
               <Radio/>
             </MDBCardBody>
           </MDBCard>

@@ -17,13 +17,16 @@ class Radio extends Component {
 
         function proficiency() {
             return <>
-                <FileUpload inputID="file1" />
+                <div  className="mt-3">
+                    <FileUpload inputID="file1" />
+                </div>
+
             </>;
         }
 
         function labHours() {
             return <>
-                <MDBRow className="mb-4">
+                <MDBRow className="mb-4 mt-3">
                     <MDBCol>
                         <select className="browser-default custom-select">
                             <option>Choose Language</option>
@@ -52,24 +55,25 @@ class Radio extends Component {
 
         return (
             <>
-                <MDBFormInline className="mb-3">
+                <MDBFormInline className="ml-3">
                     <MDBInput
                         type="radio"
-                        name="release"
-                        containerClass='mr-1'
+                        name="data"
+                        // containerClass='mr-1'
                         checked={status === 1}
                         onClick={(e) => this.radioHandler(1)}
                     />
-                    <p className="lead mb-2 ml-1">Student Class & Proficiency Data</p>
-
-                    <MDBInput className="ml-5"
+                    <p className="lead mb-2 ml-2">Student Class & Proficiency Data</p>
+                </MDBFormInline>
+                <MDBFormInline className="ml-3">
+                    <MDBInput
                         type="radio"
-                        name="release"
-                        containerClass='mr-1'
+                        name="hours"
+                        // containerClass='mr-1'
                         checked={status === 2}
                         onClick={(e) => this.radioHandler(2)}
                     />
-                    <p className="lead mb-2 ml-1">Student Language Lab Hours</p>
+                    <p className="lead mb-2 ml-2">Student Language Lab Hours</p>
                 </MDBFormInline>
 
                 {status === 1 && proficiency()}
