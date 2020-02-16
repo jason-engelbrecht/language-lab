@@ -60,7 +60,9 @@ const FileUpload = (props) => {
             <form className="input-group" onSubmit={onSubmit}>
                 <div className="custom-file">
                     {/*runs the 'onchange' function onchange*/}
-                    <input type="file" className="custom-file-input" id={inputID} onChange={onChange}/>
+                    <input type="file" className="custom-file-input"
+                           accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                           id={inputID} onChange={onChange}/>
                     {/* sets filename to the state of 'filename' variable */}
                     <label className="custom-file-label" htmlFor="inputGroupFile"
                            aria-describedby="inputGroupFileAddon">{filename}</label>

@@ -25,10 +25,24 @@ server.post('/upload', (req, res) => {
 
     const file = req.files.file;
 
+    // get file extension to verify excel document
+    let extension = file.name.split('.').pop();
+    let excel = false;
+    if(extension === 'xlsx' || extension === 'xls') {
+        excel = true;
+    }
+
+    // attempt to move the file to active directory / uploads /
     file.mv(`${__dirname}/uploads/${file.name}`, err => {
         if (err) {
             console.error(err);
             return res.status(500).send(err);
+        }
+        // return an error if somehow it got past client authentication for extension
+        if(!excel) {
+            console.error("improper file type, must be excel");
+            // return res.status(415).send;
+            return res.status(415).json({'msg':'File type must be xls or xlsx.'});
         }
 
         //convert excel upload to json object
@@ -57,10 +71,14 @@ server.post('/upload', (req, res) => {
         //upload to db and meow
         async function showUploaded() {
             await upload.save().then(() => console.log('uploaded...meow'));
+            // query the db for the data just uploaded
             let q = UploadModel.find().sort({'date' : -1}).limit(1);
             q.exec(function(error, doc) {
-                console.log("This works!");
-                console.log(doc);
+                // get array of all "students"
+                let data = doc[0].data;
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                }
             });
         }
         showUploaded();
