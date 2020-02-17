@@ -7,7 +7,7 @@ const router = express.Router();
 //get recent uploads
 router.get('/recentuploads', (req, res) => {
   //find all, select filename property, execute callback sending result
-  UploadModel.find({}).select('filename').exec((err, recentUploads) => {
+  UploadModel.find({}).select('filename date').sort({'date' : -1}).exec((err, recentUploads) => {
     if (err) console.log('failure');
     res.send({recentUploads});
   });
