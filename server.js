@@ -83,6 +83,7 @@ server.post('/upload', (req, res) => {
         }
         showUploaded();
 
+        //testing
         // TODO remove after confirmation of functionality
         //find uploaded document - this doesn't actually return the last uploaded doc?
         // UploadModel.findOne({}, {}, { sort: { 'date' : -1 } }, function (err, doc) {
