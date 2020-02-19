@@ -1,61 +1,79 @@
 import React, { Component } from 'react';
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead
+    MDBCard,
+    MDBCardBody,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead
 } from 'mdbreact';
 import * as api from '../../../api';
 
 class UploadPreview extends Component {
-  state = {};
+    state = {};
 
-  constructor() {
-    super();
-    this.getRecentData();
-  }
+    constructor() {
+        super();
+        this.getRecentData();
+    }
 
-  getRecentData = () => {
-    api.fetchRecentData().then(recentData => {
-      this.setState({recentData});
-    });
-  };
+    getRecentData = () => {
+        api.fetchRecentData().then(recentData => {
+            // console.log("Recent: " + recentData[0].data);
+            recentData = recentData[0].data;
+            this.setState({recentData});
+            // console.log(recentData);
+        });
+    };
 
-  render() {
-    return (
-      <MDBCard>
-        <MDBCardBody>
-          <MDBTable hover>
-            <MDBTableHead color="green lighten-1">
-                <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-              </tr>
-            </MDBTableHead>
-            <MDBTableBody>
-              {
-                this.state.recentData ?
-                    this.state.recentData.map(info =>
-                        <tr key={info._id}>
-                          <td>{info.data[0].id}</td>
-                          <td>{info.data[0].first_name}</td>
-                          <td>{info.data[0].last_name}</td>
-                          <td>{info.data[0].email}</td>
-                          <td>{info.data[0].gender}</td>
-                        </tr>
-                    ) : console.log('wait')
-              }
-            </MDBTableBody>
-          </MDBTable>
-        </MDBCardBody>
-      </MDBCard>
+    render() {
+        // let lastUpload = this.state.recentData;
+        // if(this.state.recentData) {
+        //     let students = [];
+        //     let lastUpload = this.state.recentData[0].data;
+        //     console.log(lastUpload);
+        //     for (let i = 0; i < lastUpload.length; i++) {
+        //         console.log(lastUpload[i].first_name);
+        //     }
+        // }
 
-    );
-  }
+
+        return (
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBTable hover>
+                        <MDBTableHead color="green lighten-1">
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>test</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                this.state.recentData ?
+                                    this.state.recentData.map(function(info) {
+                                        console.log("info: " + JSON.stringify(info));
+                                        <tr key={info.id}>
+                                            <td>{info.id}</td>
+                                            <td>{info.first_name}</td>
+                                            <td>{info.last_name}</td>
+                                            <td>{info.email}</td>
+                                            <td>{info.gender}</td>
+                                            <td>test</td>
+                                        </tr>
+                                    }
+                                    ) : console.log('wait2')
+                            }
+                        </MDBTableBody>
+                    </MDBTable>
+                </MDBCardBody>
+            </MDBCard>
+
+        );
+    }
 }
 
 export default UploadPreview;
