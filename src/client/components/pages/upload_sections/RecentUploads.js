@@ -22,6 +22,13 @@ class RecentUploads extends Component {
   //use api endpoint to get recent uploads, setting state
   getRecentUploads = () => {
     api.fetchRecentUploads().then(recentUploads => {
+      recentUploads.map(function(file) {
+        let date = new Date(file.date);
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let year = date.getFullYear();
+        file.date = month + "/" + day + "/" + year;
+      });
       this.setState({recentUploads});
     });
   };
@@ -48,7 +55,9 @@ class RecentUploads extends Component {
                   this.state.recentUploads.map(recentUpload =>
                     <tr key={recentUpload._id}>
                       <td><MDBIcon icon="check" className="mr-3 text-success"/>{recentUpload.filename}</td>
-                      <td>{recentUpload.date.slice(0, 10)}</td>
+                      <td>
+                        {recentUpload.date}
+                          </td>
                     </tr>)
                   : console.log('wait')
               }
