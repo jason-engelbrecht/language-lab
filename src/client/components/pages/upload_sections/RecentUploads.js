@@ -11,6 +11,7 @@ import {
 
 class RecentUploads extends Component {
   state = {};
+  interval;
 
   //useful for setting initial state
   constructor() {
@@ -24,6 +25,14 @@ class RecentUploads extends Component {
       this.setState({recentUploads});
     });
   };
+
+  componentDidMount() {
+    this.interval = setInterval(this.getRecentUploads.bind(this), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     return (

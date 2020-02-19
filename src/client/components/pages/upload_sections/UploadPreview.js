@@ -10,6 +10,7 @@ import * as api from '../../../api';
 
 class UploadPreview extends Component {
     state = {};
+    interval;
 
     constructor() {
         super();
@@ -24,6 +25,14 @@ class UploadPreview extends Component {
             // console.log(recentData);
         });
     };
+
+    componentDidMount() {
+        this.interval = setInterval(this.getRecentData.bind(this), 5000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
     render() {
         // let lastUpload = this.state.recentData;
@@ -48,24 +57,21 @@ class UploadPreview extends Component {
                                 <th>Last Name</th>
                                 <th>Email</th>
                                 <th>Gender</th>
-                                <th>test</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
                             {
                                 this.state.recentData ?
-                                    this.state.recentData.map(function(info) {
-                                        console.log("info: " + JSON.stringify(info));
+                                    this.state.recentData.map(info =>
                                         <tr key={info.id}>
                                             <td>{info.id}</td>
                                             <td>{info.first_name}</td>
                                             <td>{info.last_name}</td>
                                             <td>{info.email}</td>
                                             <td>{info.gender}</td>
-                                            <td>test</td>
                                         </tr>
-                                    }
-                                    ) : console.log('wait2')
+
+                                    ) : console.log("wait2")
                             }
                         </MDBTableBody>
                     </MDBTable>
