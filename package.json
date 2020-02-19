@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && npm run server",
+    "start": "concurrently \"babel-node server.js\" \"npm run client\"",
     "client": "webpack -wd",
     "server": "nodemon --exec babel-node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
