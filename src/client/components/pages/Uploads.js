@@ -7,7 +7,6 @@ import {
   MDBCardHeader,
   MDBIcon
 } from 'mdbreact';
-import FileUpload from "./upload_sections/FileUpload";
 import UploadPreview from './upload_sections/UploadPreview';
 import RecentUploads from './upload_sections/RecentUploads';
 import Radio from './upload_sections/Radio';
@@ -38,7 +37,7 @@ const Uploads =  () => {
         </MDBCol>
       </MDBRow>
 
-      <div className="empty"></div>
+      <div className="empty"> </div>
     </Fragment>
   )
 };

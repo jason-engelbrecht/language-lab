@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import FileUpload from "./FileUpload";
-import {MDBCardBody, MDBCol, MDBFormInline, MDBInput, MDBRow} from "mdbreact";
+import {MDBCardBody, MDBCol, MDBFormInline, MDBInput, MDBInputGroup, MDBRow} from "mdbreact";
 class Radio extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { status: 1, language: '', staffing: '' }; // show first radio button by default
+        this.state = { status: 1, language: '', staffing: '', quarter: '', year: '' }; // show first radio button by default
     }
 
     radioHandler = (status) => {
@@ -21,13 +21,21 @@ class Radio extends Component {
         this.setState({staffing});
     };
 
+    quarterHandler = (quarter) => {
+        this.setState({quarter});
+    };
+
+    yearHandler = (year) => {
+        this.setState({year});
+    };
+
     render() {
-        const { status, language, staffing } = this.state;
+        const { status, language, staffing, quarter, year } = this.state;
 
         function proficiency() {
             return <>
                 <div  className="mt-3">
-                    <FileUpload inputID="file1" />
+                    <FileUpload inputID="file1" quarter={quarter} year={year} />
                 </div>
 
             </>;
@@ -40,6 +48,14 @@ class Radio extends Component {
 
         const staffingChange = (e) => {
             this.staffingHandler(e.target.value);
+        };
+
+        const quarterChange = (e) => {
+            this.quarterHandler(e.target.value);
+        };
+
+        const yearChange = (e) => {
+            this.yearHandler(e.target.value);
         };
 
         function labHours() {
@@ -66,33 +82,48 @@ class Radio extends Component {
                     </MDBCol>
                 </MDBRow>
                 <div className="mb-4">
-                    <FileUpload inputID="file2" language={language} staffing={staffing} />
+                    <FileUpload inputID="file2" language={language} staffing={staffing} quarter={quarter} year={year} />
                 </div>
             </>;
         }
 
         return (
             <>
-                <MDBFormInline className="ml-3">
-                    <MDBInput
-                        type="radio"
-                        name="data"
-                        // containerClass='mr-1'
-                        checked={status === 1}
-                        onClick={(e) => this.radioHandler(1)}
-                    />
-                    <p className="lead mb-2 ml-2">Student Class & Proficiency Data</p>
-                </MDBFormInline>
-                <MDBFormInline className="ml-3">
-                    <MDBInput
-                        type="radio"
-                        name="hours"
-                        // containerClass='mr-1'
-                        checked={status === 2}
-                        onClick={(e) => this.radioHandler(2)}
-                    />
-                    <p className="lead mb-2 ml-2">Student Language Lab Hours</p>
-                </MDBFormInline>
+                <MDBRow>
+                    <MDBCol size="7">
+                        <MDBFormInline className="ml-3">
+                            <MDBInput
+                                type="radio"
+                                name="data"
+                                // containerClass='mr-1'
+                                checked={status === 1}
+                                onClick={(e) => this.radioHandler(1)}
+                            />
+                            <p className="lead mb-2 ml-2">Student Class & Proficiency Data</p>
+                        </MDBFormInline>
+                        <MDBFormInline className="ml-3">
+                            <MDBInput
+                                type="radio"
+                                name="hours"
+                                // containerClass='mr-1'
+                                checked={status === 2}
+                                onClick={(e) => this.radioHandler(2)}
+                            />
+                            <p className="lead mb-2 ml-2">Student Language Lab Hours</p>
+                        </MDBFormInline>
+                    </MDBCol>
+                    <MDBCol size="5">
+                            <select className="custom-select browser-default" onChange={quarterChange}>
+                                <option>Choose Quarter</option>
+                                <option value="Fall">Fall</option>
+                                <option value="Winter">Winter</option>
+                                <option value="Spring">Spring</option>
+                                <option value="Summer">Summer</option>
+                            </select>
+                            <MDBInputGroup type="text"  className="mt-1" value="Enter Year" onChange={yearChange}/>
+                    </MDBCol>
+                </MDBRow>
+
 
                 {status === 1 && proficiency()}
                 {status === 2 && labHours()}
