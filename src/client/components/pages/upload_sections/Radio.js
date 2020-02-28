@@ -5,15 +5,24 @@ class Radio extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { status: 1 }; // show first radio button by default
+        this.state = { status: 1, language: '', staffing: '' }; // show first radio button by default
     }
 
     radioHandler = (status) => {
         this.setState({status});
-    }
+        console.log(this.state);
+    };
+
+    languageHandler = (language) => {
+        this.setState({language});
+    };
+
+    staffingHandler = (staffing) => {
+        this.setState({staffing});
+    };
 
     render() {
-        const { status } = this.state;
+        const { status, language, staffing } = this.state;
 
         function proficiency() {
             return <>
@@ -24,31 +33,40 @@ class Radio extends Component {
             </>;
         }
 
+        const languageChange = (e) => {
+            // console.log("language target: " + e.target.option);
+            this.languageHandler(e.target.value);
+        };
+
+        const staffingChange = (e) => {
+            this.staffingHandler(e.target.value);
+        };
+
         function labHours() {
             return <>
                 <MDBRow className="mb-4 mt-3">
                     <MDBCol>
-                        <select className="browser-default custom-select">
+                        <select className="browser-default custom-select" onChange={languageChange}>
                             <option>Choose Language</option>
-                            <option value="1">German</option>
-                            <option value="2">Japanese</option>
-                            <option value="3">Spanish</option>
-                            <option value="4">Chinese</option>
-                            <option value="5">French</option>
+                            <option value="German">German</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="Chinese">Chinese</option>
+                            <option value="French">French</option>
                         </select>
                     </MDBCol>
                     <MDBCol>
-                        <select className="browser-default custom-select">
+                        <select className="browser-default custom-select" onChange={staffingChange}>
                             <option>Choose Level of Support</option>
-                            <option value="1">No Staffing</option>
-                            <option value="2">Student Staffing</option>
-                            <option value="3">Teacher Staffing</option>
-                            <option value="4">Teacher & Student Staffing</option>
+                            <option value="No Staffing">No Staffing</option>
+                            <option value="Student Staffing">Student Staffing</option>
+                            <option value="Teacher Staffing">Teacher Staffing</option>
+                            <option value="Teacher & Student Staffing">Teacher & Student Staffing</option>
                         </select>
                     </MDBCol>
                 </MDBRow>
                 <div className="mb-4">
-                    <FileUpload inputID="file2"/>
+                    <FileUpload inputID="file2" language={language} staffing={staffing} />
                 </div>
             </>;
         }

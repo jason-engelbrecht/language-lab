@@ -31,7 +31,7 @@ server.post('/upload', (req, res) => {
     if(extension === 'xlsx' || extension === 'xls') {
         excel = true;
     }
-
+    console.log("Here?");
     // attempt to move the file to active directory / uploads /
     file.mv(`${__dirname}/uploads/${file.name}`, err => {
         if (err) {
@@ -50,18 +50,48 @@ server.post('/upload', (req, res) => {
             sourceFile: `${__dirname}/uploads/${file.name}`,
             //1st row is header - don't include
             header: {
-                rows: 1
+                rows: 2
             },
             //column header as keys
             columnToKey: {
-                '*': '{{columnHeader}}'
-            }
+                // '*': '{{columnHeader}}'
+                'B': '{{B1}}',
+                'C': '{{C1}}',
+                'E': '{{E1}}'
+            },
+            sheets: ['Spring 2018 Lab Usage Summary']
         });
+
+        // console.log("sheet2: " + result[sheet2]);
+        // let count = 0;
+        let studentData = [];
+        for(let prop in result) {
+            if(result.hasOwnProperty(prop)) {
+                // console.log("prop " + count + ": " + prop + " => " + result[prop]);
+                // count++;
+                studentData.push(result[prop]);
+            }
+        }
+        studentData = studentData[0];
+        // console.log("Student Data: ");
+        for (let i = 0; i < studentData.length; i++) {
+            if(studentData[i]['Student First Name']) {
+                // console.log(studentData[i]['Student First Name'] + " => " + studentData[i]['Hours in the Lab']);
+                studentData[i].id = studentData[i]['Student First Name'] + "-" + studentData[i]['Student Last Name'];
+                studentData[i].first_name = studentData[i]['Student First Name'];
+                studentData[i].last_name = studentData[i]['Student Last Name'];
+                studentData[i].hours = studentData[i]['Hours in the Lab'];
+                delete studentData[i]['Student First Name'];
+                delete studentData[i]['Student Last Name'];
+                delete studentData[i]['Hours in the Lab'];
+            }
+        }
+
 
         //add file name to result object and add result data
         const uploadData = {
             filename: file.name,
-            data: result.data
+            data: studentData
         };
         // console.log(uploadData);
 

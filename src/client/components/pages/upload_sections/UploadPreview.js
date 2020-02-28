@@ -55,20 +55,18 @@ class UploadPreview extends Component {
                                 <th>#</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Gender</th>
+                                <th>Hours</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
                             {
                                 this.state.recentData ?
                                     this.state.recentData.map(info =>
-                                        <tr key={info.id}>
-                                            <td>{info.id}</td>
+                                        <tr key={info._id}>
+                                            <td>{info._id}</td>
                                             <td>{info.first_name}</td>
                                             <td>{info.last_name}</td>
-                                            <td>{info.email}</td>
-                                            <td>{info.gender}</td>
+                                            <td>{info.hours}</td>
                                         </tr>
 
                                     ) : console.log("wait2")

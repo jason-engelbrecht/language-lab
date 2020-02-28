@@ -11,7 +11,21 @@ db.once('open', function() {
 //create upload schema
 let uploadSchema = new mongoose.Schema({
   filename: String,
-  data: Array,
+  // data: Array,
+  data: [
+    {
+      // id: String,
+      first_name: String,
+      last_name: String,
+      hours: String,
+      currentClass: String,
+      language: String,
+      reading: Number,
+      writing: Number,
+      listening: Number,
+      speaking: Number
+    }
+  ],
   date: { type: Date, default: Date.now },
 });
 

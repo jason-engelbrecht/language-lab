@@ -43,28 +43,28 @@ class RecentUploads extends Component {
 
   render() {
     return (
-      <MDBCard className="flex-fill">
-        <MDBCardHeader color="green">
-          <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
-        </MDBCardHeader>
-        <MDBCardBody>
-          <MDBTable hover borderless scrollY>
-            <MDBTableBody>
-              {
-                this.state.recentUploads ?
-                  this.state.recentUploads.map(recentUpload =>
-                    <tr key={recentUpload._id}>
-                      <td><MDBIcon icon="check" className="mr-3 text-success"/>{recentUpload.filename}</td>
-                      <td>
-                        {recentUpload.date}
-                          </td>
-                    </tr>)
-                  : console.log('wait')
-              }
-            </MDBTableBody>
-          </MDBTable>
-        </MDBCardBody>
-      </MDBCard>
+        <MDBCard className="flex-fill">
+          <MDBCardHeader color="green">
+            <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
+          </MDBCardHeader>
+          <MDBCardBody>
+            <MDBTable hover borderless scrollY>
+              <MDBTableBody>
+                {
+                  this.state.recentUploads ?
+                      this.state.recentUploads.map(recentUpload =>
+                          <tr key={recentUpload._id}>
+                            <td><MDBIcon icon="check" className="mr-3 text-success"/>{recentUpload.filename}</td>
+                            <td>
+                              {recentUpload.date}
+                            </td>
+                          </tr>)
+                      : console.log('wait')
+                }
+              </MDBTableBody>
+            </MDBTable>
+          </MDBCardBody>
+        </MDBCard>
     );
   }
 }
