@@ -31,10 +31,16 @@ const FileUpload = (props) => {
         const formData = new FormData();
         // constant was created on server.js 'file', setting it with the hook setFile
         formData.append('file', file);
+        formData.append('quarter', props.quarter);
+        formData.append('year', props.year);
+        if(props.language) {
+            formData.append('language', props.language);
+        }
+        if(props.staffing) {
+            formData.append('support', props.staffing);
+        }
 
         try {
-            console.log("language prop: " + props.language);
-            console.log("staffing prop: " + props.staffing);
             const res = await axios.post('/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

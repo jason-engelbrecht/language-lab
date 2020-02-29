@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import FileUpload from "./FileUpload";
-import {MDBCardBody, MDBCol, MDBFormInline, MDBInput, MDBInputGroup, MDBRow} from "mdbreact";
+import {MDBCardBody, MDBCol, MDBContainer, MDBFormInline, MDBInput, MDBInputGroup, MDBRow} from "mdbreact";
 class Radio extends Component {
 
     constructor(props) {
@@ -10,7 +10,6 @@ class Radio extends Component {
 
     radioHandler = (status) => {
         this.setState({status});
-        console.log(this.state);
     };
 
     languageHandler = (language) => {
@@ -98,8 +97,10 @@ class Radio extends Component {
                                 // containerClass='mr-1'
                                 checked={status === 1}
                                 onClick={(e) => this.radioHandler(1)}
+                                label="Student Class & Proficiency Data"
+                                labelClass="ml-2"
+                                id="proficiency"
                             />
-                            <p className="lead mb-2 ml-2">Student Class & Proficiency Data</p>
                         </MDBFormInline>
                         <MDBFormInline className="ml-3">
                             <MDBInput
@@ -108,8 +109,10 @@ class Radio extends Component {
                                 // containerClass='mr-1'
                                 checked={status === 2}
                                 onClick={(e) => this.radioHandler(2)}
+                                label="Student Language Lab Hours"
+                                labelClass="ml-2"
+                                id="labHours"
                             />
-                            <p className="lead mb-2 ml-2">Student Language Lab Hours</p>
                         </MDBFormInline>
                     </MDBCol>
                     <MDBCol size="5">
@@ -120,7 +123,7 @@ class Radio extends Component {
                                 <option value="Spring">Spring</option>
                                 <option value="Summer">Summer</option>
                             </select>
-                            <MDBInputGroup type="text"  className="mt-1" value="Enter Year" onChange={yearChange}/>
+                            <MDBInputGroup className="mt-1" hint="Enter Year" onChange={yearChange}/>
                     </MDBCol>
                 </MDBRow>
 
