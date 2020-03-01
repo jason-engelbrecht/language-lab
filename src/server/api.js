@@ -1,5 +1,5 @@
 import express from 'express';
-import UploadModel from './database';
+import {UploadModel} from './database';
 
 //start router
 const router = express.Router();
