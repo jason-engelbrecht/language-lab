@@ -1,5 +1,5 @@
 import express from 'express';
-import {UploadModel} from './database';
+import {UploadModel, ProficiencyModel} from './database';
 
 //start router
 const router = express.Router();
@@ -19,6 +19,26 @@ router.get('/recentdata', (req, res) => {
   UploadModel.find().select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
     if (err) console.log('failure');
     res.send({recentdata});
+  });
+});
+
+router.get('/lab/:quarter/:year', (req, res) => {
+  var lastQ = req.params.quarter;
+  var lastY = req.params.year;
+
+  UploadModel.find({quarter : lastQ, year: lastY}).exec( (err, quarterData) => {
+    if(err) console.error('error retrieving lab data: ' + err);
+    res.send({quarterData});
+  });
+});
+
+router.get('/proficiency/:quarter/:year', (req, res) => {
+  var lastQ = req.params.quarter;
+  var lastY = req.params.year;
+
+  ProficiencyModel.find({quarter : lastQ, year: lastY}).exec( (err, quarterData) => {
+    if(err) console.error("error retrieving proficiency data: " + err);
+    res.send({quarterData});
   });
 });
 
