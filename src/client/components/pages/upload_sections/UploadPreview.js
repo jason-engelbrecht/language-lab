@@ -75,7 +75,6 @@ class UploadPreview extends Component {
                     </MDBTable>
                 </MDBCardBody>
             </MDBCard>
-
         );
     }
 }

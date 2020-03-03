@@ -91,28 +91,34 @@ class Radio extends Component {
                 <MDBRow>
                     <MDBCol size="7">
                         <MDBFormInline className="ml-3">
-                            <MDBInput
-                                type="radio"
-                                name="data"
-                                // containerClass='mr-1'
-                                checked={status === 1}
-                                onClick={(e) => this.radioHandler(1)}
-                                label="Student Class & Proficiency Data"
-                                labelClass="ml-2"
-                                id="proficiency"
-                            />
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="data"
+                                    // containerClass='mr-1'
+                                    checked={status === 1}
+                                    onClick={(e) => this.radioHandler(1)}
+                                    // label="Student Class & Proficiency Data"
+                                    // labelClass="ml-2"
+                                    id="proficiency"
+                                    className="mr-3"
+                                    />
+                                    Student Class & Proficiency Data</label>
                         </MDBFormInline>
-                        <MDBFormInline className="ml-3">
-                            <MDBInput
-                                type="radio"
-                                name="hours"
-                                // containerClass='mr-1'
-                                checked={status === 2}
-                                onClick={(e) => this.radioHandler(2)}
-                                label="Student Language Lab Hours"
-                                labelClass="ml-2"
-                                id="labHours"
-                            />
+                        <MDBFormInline className="ml-3 mt-3">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="hours"
+                                    // containerClass='mr-1'
+                                    checked={status === 2}
+                                    onClick={(e) => this.radioHandler(2)}
+                                    // label="Student Language Lab Hours"
+                                    // labelClass="ml-2"
+                                    id="labHours"
+                                    className="mr-3"
+                                    />
+                                    Student Language Lab Hours</label>
                         </MDBFormInline>
                     </MDBCol>
                     <MDBCol size="5">
