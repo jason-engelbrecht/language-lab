@@ -49,7 +49,7 @@ class UploadPreview extends Component {
         return (
             <MDBCard>
                 <MDBCardBody>
-                    <MDBTable hover>
+                    <MDBTable hover responsive>
                         <MDBTableHead color="green lighten-1">
                             <tr>
                                 <th>#</th>
