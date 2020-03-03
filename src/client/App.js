@@ -10,7 +10,9 @@ class App extends Component {
         return (
             <div className="flexible-content">
                 <TopNavigation />
-                <SideNavigation/>
+                <div id="sideNav">
+                    <SideNavigation />
+                </div>
                 <main id="content" className="p-5">
                     <Routes />
                 </main>
