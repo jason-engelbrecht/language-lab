@@ -12,7 +12,7 @@ const DashboardPage =  () => {
     const [labData, setLab] = useState({});
     const [profData, setProf] = useState({});
     const [dataYear, setYear] = useState('2020');
-    const [dataQuarter, setQuarter] = useState('Fall');
+    const [dataQuarter, setQuarter] = useState('Winter');
 
     const getRecentData = (e) => {
         e.preventDefault();
@@ -20,7 +20,7 @@ const DashboardPage =  () => {
             setLab(recentData[0]);
         });
         // console.log("lab: " + labData);
-        api.fetchProfData('Fall', '2020').then(recentData => {
+        api.fetchProfData(dataQuarter, dataYear).then(recentData => {
             setProf(recentData[0]);
         });
         // console.log("prof: " + profData);
@@ -35,6 +35,7 @@ const DashboardPage =  () => {
     const changeYear = e => {
         e.preventDefault();
         setYear(e.target.value);
+        console.log("year changed: " + e.target.value);
     };
 
     return (
@@ -44,11 +45,11 @@ const DashboardPage =  () => {
                     <label htmlFor="quarter">Quarter</label>
                     <select className="custom-select" name="quarter" id="quarter" onChange={changeQuarter}>
                         <option value="Fall">Fall</option>
-                        <option value="Winter">Winter</option>
+                        <option value="Winter" checked={true}>Winter</option>
                         <option value="Spring">Spring</option>
                     </select>
                     <label htmlFor="year">Year</label>
-                    <input type="text" className="form-control" id="year" placeholder={dataYear} onChange={changeYear}/>
+                    <input type="text" className="form-control" id="year" placeholder={dataYear} onChange={changeYear} defaultValue={2020}/>
                     <button onClick={getRecentData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
                 </div>
             </div>
