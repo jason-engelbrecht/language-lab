@@ -3,6 +3,8 @@ import { MDBCol, MDBCard, MDBCardBody, MDBCardHeader, MDBRow, MDBListGroup, MDBL
 import { Bar, Pie } from 'react-chartjs-2';
 
 class ChartSection1 extends Component {
+
+
     render(){
         const dataBar = {
             labels: ['0', '1-2', '3-5', '5-7', '8+'],
@@ -69,18 +71,22 @@ class ChartSection1 extends Component {
         //     }
         //     ]
         // }
-        return (
-            <MDBRow className="mb-4">
-                <MDBCol className="mb-4">
-                    <MDBCard className="mb-4">
-                        <MDBCardBody>
-                            <Bar data={dataBar} height={500} options={barChartOptions} />
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
+        if(this.props.labData && this.props.labData['data'] && this.props.profData && this.props.profData['data']) {
+            return (
+                <MDBRow className="mb-4">
+                    <MDBCol className="mb-4">
+                        <MDBCard className="mb-4">
+                            <MDBCardBody>
+                                <Bar data={dataBar} height={500} options={barChartOptions}/>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
 
-            </MDBRow>
-        )
+                </MDBRow>
+            )
+        } else {
+            return null;
+        }
     }
 }
 

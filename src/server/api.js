@@ -16,7 +16,7 @@ router.get('/recentuploads', (req, res) => {
 //get recent data
 router.get('/recentdata', (req, res) => {
   //find all, select data objects from most recent upload, execute callback sending result
-  UploadModel.find().select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
+  UploadModel.find().select('data quarter year').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
     if (err) console.log('failure');
     res.send({recentdata});
   });
