@@ -94,7 +94,7 @@ const DashboardPage = () => {
             <div className='container mb-5'>
                 <div className="form-group">
                     <label htmlFor="quarter">Quarter</label>
-                    <select className="custom-select" name="quarter" id="quarter" onChange={changeQuarter} value={dataQuarter}>
+                    <select className="custom-select" name="quarter" id="quarter" onChange={changeQuarter} defaultValue={dataQuarter}>
                         <option value="Fall">Fall</option>
                         <option value="Winter">Winter</option>
                         <option value="Spring">Spring</option>
