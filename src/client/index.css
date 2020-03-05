@@ -269,3 +269,7 @@ main {
 .show {
   display: block;
 }
+
+.empty#dash {
+  height: 290px;
+}
