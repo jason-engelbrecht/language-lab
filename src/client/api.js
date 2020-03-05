@@ -13,6 +13,12 @@ export const fetchRecentData = () => {
       .then(resp => resp.data.recentdata);
 };
 
+//CLICKED
+export const fetchRecentTRData = (id) => {
+  return axios.get(`/api/recenttrdata/${id}`)
+      .then(resp => resp.data.recentdata);
+};
+
 export const fetchLabData = (quarter, year) => {
   return axios.get(`/api/lab/${quarter}/${year}`)
       .then(res => res.data.quarterData)

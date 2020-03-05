@@ -16,7 +16,18 @@ router.get('/recentuploads', (req, res) => {
 //get recent data
 router.get('/recentdata', (req, res) => {
   //find all, select data objects from most recent upload, execute callback sending result
-  UploadModel.find().select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
+  UploadModel.find({_id: "5e5d5ec2bcd64c07c8564ec4"}).select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
+    if (err) console.log('failure');
+    res.send({recentdata});
+  });
+});
+
+//gets data from clicked row
+router.get('/recenttrdata/:id', (req, res) => {
+  var clickedData = req.params.id;
+
+  //finds clicked row by row object id
+  UploadModel.find({_id: clickedData}).select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
     if (err) console.log('failure');
     res.send({recentdata});
   });
