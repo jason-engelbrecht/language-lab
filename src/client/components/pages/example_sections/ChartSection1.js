@@ -3,33 +3,110 @@ import { MDBCol, MDBCard, MDBCardBody, MDBCardHeader, MDBRow, MDBListGroup, MDBL
 import { Bar, Pie } from 'react-chartjs-2';
 
 class ChartSection1 extends Component {
+
+
     render(){
+        var labData = this.props.labData;
+        var profData = this.props.profData;
+
+        // pass lab hours into prof data
+        for (let i = 0; i < profData['data'].length; i++) {
+            for (let j = 0; j < labData['data'].length; j++) {
+                if(profData['data'][i].first_name === labData['data'][j].first_name
+                            && profData['data'][i].last_name === labData['data'][j].last_name) {
+                    profData['data'][i].hours = labData['data'][j]['hours'];
+                }
+                // console.log("hours: " + labData['data'][j]['hours']);
+            }
+
+        }
+
+
+        // how many students 1-2 hours, how many 3-5, etc
+        var lab12 = 0;
+        var lab35 = 0;
+        var lab68 = 0;
+        var lab9 = 0;
+        var count = 0;
+        var reading = [0, 0, 0, 0, 0];
+        var writing = [0, 0, 0, 0, 0];
+        var speaking = [0, 0, 0, 0, 0];
+        var listening = [0, 0, 0, 0, 0];
+        for (let i = 0; i < profData['data'].length; i++) {
+            if(!profData['data'][i]['hours'] || profData['data'][i]['hours'] === 0) {
+                count++;
+                reading[0] += profData['data'][i]['reading'];
+                writing[0] += profData['data'][i]['writing'];
+                speaking[0] += profData['data'][i]['speaking'];
+                listening[0] += profData['data'][i]['listening'];
+            } else if(profData['data'][i]['hours'] <=2) {
+                lab12++;
+                reading[1] += profData['data'][i]['reading'];
+                writing[1] += profData['data'][i]['writing'];
+                speaking[1] += profData['data'][i]['speaking'];
+                listening[1] += profData['data'][i]['listening'];
+            } else if(profData['data'][i]['hours'] <=5) {
+                lab35++;
+                reading[2] += profData['data'][i]['reading'];
+                writing[2] += profData['data'][i]['writing'];
+                speaking[2] += profData['data'][i]['speaking'];
+                listening[2] += profData['data'][i]['listening'];
+            } else if(profData['data'][i]['hours'] <=8) {
+                lab68++;
+                reading[3] += profData['data'][i]['reading'];
+                writing[3] += profData['data'][i]['writing'];
+                speaking[3] += profData['data'][i]['speaking'];
+                listening[3] += profData['data'][i]['listening'];
+            } else {
+                lab9++;
+                reading[4] += profData['data'][i]['reading'];
+                writing[4] += profData['data'][i]['writing'];
+                speaking[4] += profData['data'][i]['speaking'];
+                listening[4] += profData['data'][i]['listening'];
+            }
+        }
+
+        // total (and average) reading 1-2, writing 1-2, etc
+
+
+
+
+
+
+        // console.log("chartLab: " + labData['data']);
+
         const dataBar = {
-            labels: ['0', '1-2', '3-5', '5-7', '8+'],
+            labels: ['0', '1-2', '3-5', '6-8', '9+'],
             datasets: [
             {
                 label: 'Reading',
-                data: [1, 2, 3, 4, 5],
+                data: [reading[0] / count, reading[1] / lab12, reading[2] / lab35, reading[3] / lab68, reading[4] / lab9],
                 backgroundColor: 'rgba(245, 74, 85, 0.5)',
                 borderWidth: 1
             }, {
                 label: 'Writing',
-                data: [2, 3, 4, 5, 6],
+                data: [writing[0] / count, writing[1] / lab12, writing[2] / lab35, writing[3] / lab68, writing[4] / lab9],
                 backgroundColor: 'rgba(90, 173, 246, 0.5)',
                 borderWidth: 1
             }, {
                 label: 'Listening',
-                data: [1, 2, 3, 4, 5],
+                data: [listening[0] / count, listening[1] / lab12, listening[2] / lab35, listening[3] / lab68, listening[4] / lab9],
                 backgroundColor: 'rgba(245, 192, 50, 0.5)',
                 borderWidth: 1
             }, {
                 label: 'Speaking',
-                data: [2, 3, 4, 5, 6],
+                data: [speaking[0] / count, speaking[1] / lab12, speaking[2] / lab35, speaking[3] / lab68, speaking[4] / lab9],
                 backgroundColor: 'rgba(130, 74, 85, 0.5)',
                 borderWidth: 1
             }, {
                 label: 'Overall',
-                data: [6, 10, 14, 18, 22],
+                data: [
+                    (reading[0] + writing[0] + listening[0] + speaking[0]) / count,
+                    (reading[1] + writing[1] + listening[1] + speaking[1]) / lab12,
+                    (reading[2] + writing[2] + listening[2] + speaking[2]) / lab35,
+                    (reading[3] + writing[3] + listening[3] + speaking[3]) / lab68,
+                    (reading[4] + writing[4] + listening[4] + speaking[4]) / lab9
+                ],
                 backgroundColor: 'rgba(25, 74, 85, 0.5)',
                 borderWidth: 1
             }
@@ -56,6 +133,11 @@ class ChartSection1 extends Component {
                 beginAtZero: true
                 }
             }]
+            },
+            title:{
+                display: true,
+                text: labData['quarter'] + " " + labData['year'],
+                fontSize: 32
             }
         };
 
@@ -69,18 +151,22 @@ class ChartSection1 extends Component {
         //     }
         //     ]
         // }
-        return (
-            <MDBRow className="mb-4">
-                <MDBCol className="mb-4">
-                    <MDBCard className="mb-4">
-                        <MDBCardBody>
-                            <Bar data={dataBar} height={500} options={barChartOptions} />
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
+        if(this.props.labData && this.props.labData['data'] && this.props.profData && this.props.profData['data']) {
+            return (
+                <MDBRow className="mb-4">
+                    <MDBCol className="mb-4">
+                        <MDBCard className="mb-4">
+                            <MDBCardBody>
+                                <Bar data={dataBar} height={500} options={barChartOptions}/>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
 
-            </MDBRow>
-        )
+                </MDBRow>
+            )
+        } else {
+            return null;
+        }
     }
 }
 
