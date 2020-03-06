@@ -3,4 +3,3 @@ dist
 .idea
 *.log
 public/bundle.js
-uploads
