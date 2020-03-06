@@ -5,17 +5,21 @@ import {
   MDBCardBody,
   MDBCardHeader,
   MDBIcon,
-  MDBTable,
   MDBTableBody,
 } from 'mdbreact';
 
+//exports clicked row data
+export let clickedTR = {
+  clickedFile: ''
+};
+
 class RecentUploads extends Component {
   state = {};
-  interval;
+  // interval;
 
   //useful for setting initial state
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.getRecentUploads();
   }
 
@@ -41,32 +45,52 @@ class RecentUploads extends Component {
     clearInterval(this.interval);
   }
 
+  showRow(file) {
+
+    //shows table once a row is clicked
+    var NAME = document.getElementById("hide");
+    NAME.className="show";
+
+    //sends data from row clicked to table
+    let id = file._id;
+    clickedTR = {
+      clickedFile: id
+    };
+
+  }
+
+
+
   render() {
     return (
-      <MDBCard className="flex-fill">
-        <MDBCardHeader color="green">
-          <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
-        </MDBCardHeader>
-        <MDBCardBody>
-          <MDBTable hover borderless scrollY>
-            <MDBTableBody>
-              {
-                this.state.recentUploads ?
-                  this.state.recentUploads.map(recentUpload =>
-                    <tr key={recentUpload._id}>
-                      <td><MDBIcon icon="check" className="mr-3 text-success"/>{recentUpload.filename}</td>
-                      <td>
-                        {recentUpload.date}
-                          </td>
-                    </tr>)
-                  : console.log('wait')
-              }
-            </MDBTableBody>
-          </MDBTable>
-        </MDBCardBody>
-      </MDBCard>
+        <MDBCard className="flex-fill">
+          <MDBCardHeader color="green">
+            <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
+          </MDBCardHeader>
+          <MDBCardBody id="cardTable">
+            <table className="table table-wrapper-scroll-y my-custom-scrollbar" id="table">
+              <MDBTableBody>
+                {
+                  this.state.recentUploads ?
+                      this.state.recentUploads.map(recentUpload =>
+                          <tr key={recentUpload._id} onClick={(e) => this.showRow(recentUpload, e)}>
+                            <td>
+                              <MDBIcon icon="check" className="mr-3 text-success"/>
+                              {recentUpload.filename}
+                            </td>
+                            <td>
+                              {recentUpload.date}
+                            </td>
+                          </tr>)
+                      : console.log('wait')
+                }
+              </MDBTableBody>
+            </table>
+          </MDBCardBody>
+        </MDBCard>
     );
   }
 }
 
 export default RecentUploads;
+

@@ -6,6 +6,10 @@ import Progress from "./ProgressBar";
 const FileUpload = (props) => {
     // set the input tag id in component props
     let inputID = props.inputID;
+    console.log("input id: " + props.inputID);
+    console.log("updated staffing? " + props.staffing);
+    console.log("updated language? " + props.language);
+    // TODO: inputID file1 = first type,  file2 = second type?
     // react hooks => generates methods?
     const [file, setFile] = useState(''); // sets default
     // sets the starting filename to "choose file"
@@ -14,21 +18,32 @@ const FileUpload = (props) => {
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
 
-    const onChange = e => {
+    const fileChange = e => {
         // html file input allows multiples so stores as an array
         setFile(e.target.files[0]);
         // get the name property of the file
         setFilename(e.target.files[0].name);
     };
 
+
     const onSubmit = async e => {
         e.preventDefault();
+        let reportType = 'proficiency';
         const formData = new FormData();
         // constant was created on server.js 'file', setting it with the hook setFile
         formData.append('file', file);
+        formData.append('quarter', props.quarter);
+        formData.append('year', props.year);
+        if(props.language) {
+            formData.append('language', props.language);
+            reportType = 'lab';
+        }
+        if(props.staffing) {
+            formData.append('support', props.staffing);
+        }
 
         try {
-            const res = await axios.post('/upload', formData, {
+            const res = await axios.post(`/upload/${reportType}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -62,7 +77,7 @@ const FileUpload = (props) => {
                     {/*runs the 'onchange' function onchange*/}
                     <input type="file" className="custom-file-input"
                            accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-                           id={inputID} onChange={onChange}/>
+                           id={inputID} onChange={fileChange}/>
                     {/* sets filename to the state of 'filename' variable */}
                     <label className="custom-file-label" htmlFor="inputGroupFile"
                            aria-describedby="inputGroupFileAddon">{filename}</label>

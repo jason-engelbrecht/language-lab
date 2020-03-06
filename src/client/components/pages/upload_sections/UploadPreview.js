@@ -7,6 +7,7 @@ import {
     MDBTableHead
 } from 'mdbreact';
 import * as api from '../../../api';
+import {clickedTR} from "./RecentUploads";
 
 class UploadPreview extends Component {
     state = {};
@@ -14,20 +15,22 @@ class UploadPreview extends Component {
 
     constructor() {
         super();
-        this.getRecentData();
+        this.getRecentTRData();
     }
 
-    getRecentData = () => {
-        api.fetchRecentData().then(recentData => {
-            // console.log("Recent: " + recentData[0].data);
-            recentData = recentData[0].data;
-            this.setState({recentData});
-            // console.log(recentData);
-        });
+    getRecentTRData = () => {
+        if (clickedTR.clickedFile !== '') {
+            api.fetchRecentTRData(clickedTR.clickedFile).then(recentData => {
+                // console.log("Recent: " + recentData[0].data);
+                recentData = recentData[0].data;
+                this.setState({recentData});
+                console.log("clicked: " + clickedTR);
+            });
+        }
     };
 
     componentDidMount() {
-        this.interval = setInterval(this.getRecentData.bind(this), 5000);
+        this.interval = setInterval(this.getRecentTRData.bind(this), 500);
     }
 
     componentWillUnmount() {
@@ -47,28 +50,26 @@ class UploadPreview extends Component {
 
 
         return (
-            <MDBCard>
+            <MDBCard className="hide" id="hide">
                 <MDBCardBody>
-                    <MDBTable hover>
+                    <MDBTable hover responsive>
                         <MDBTableHead color="green lighten-1">
                             <tr>
                                 <th>#</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Gender</th>
+                                <th>Hours</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
                             {
                                 this.state.recentData ?
                                     this.state.recentData.map(info =>
-                                        <tr key={info.id}>
-                                            <td>{info.id}</td>
+                                        <tr key={info._id}>
+                                            <td>{info._id}</td>
                                             <td>{info.first_name}</td>
                                             <td>{info.last_name}</td>
-                                            <td>{info.email}</td>
-                                            <td>{info.gender}</td>
+                                            <td>{info.hours}</td>
                                         </tr>
 
                                     ) : console.log("wait2")
@@ -77,7 +78,6 @@ class UploadPreview extends Component {
                     </MDBTable>
                 </MDBCardBody>
             </MDBCard>
-
         );
     }
 }
