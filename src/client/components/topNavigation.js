@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    MDBCollapse, MDBContainer,
+    MDBCollapse, MDBContainer, MDBLink,
     MDBNavbar,
     MDBNavbarBrand,
     MDBNavbarNav,
@@ -25,8 +25,8 @@ class TopNavigation extends Component {
         return (
             <MDBContainer>
                 <MDBNavbar className="flexible-navbar" light expand="md" fixed="top" id="topNav">
-                    <MDBNavbarBrand >
-                        <h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"/>The Language Lab</h3>
+                    <MDBNavbarBrand to='/'>
+                        <MDBLink to='/'><h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"/>The Language Lab</h3></MDBLink>
                     </MDBNavbarBrand>
                     {/*hamburger menu*/}
                     <MDBNavbarToggler
