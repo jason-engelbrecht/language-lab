@@ -15,18 +15,15 @@ let uploadSchema = new mongoose.Schema({
   quarter: String,
   year: String,
   language: String,
+  staffing: String,
   data: [
     {
-      // id: String,
+      sid: String,
       first_name: String,
       last_name: String,
-      hours: String,
+      hours: Number,
       currentClass: String,
-      language: String,
-      reading: Number,
-      writing: Number,
-      listening: Number,
-      speaking: Number
+      language: String
     }
   ],
   date: { type: Date, default: Date.now },

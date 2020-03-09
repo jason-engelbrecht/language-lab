@@ -12,8 +12,7 @@ class ChartSection1 extends Component {
         // pass lab hours into prof data
         for (let i = 0; i < profData['data'].length; i++) {
             for (let j = 0; j < labData['data'].length; j++) {
-                if(profData['data'][i].first_name === labData['data'][j].first_name
-                            && profData['data'][i].last_name === labData['data'][j].last_name) {
+                if(profData['data'][i].sid === labData['data'][j].sid) {
                     profData['data'][i].hours = labData['data'][j]['hours'];
                 }
                 // console.log("hours: " + labData['data'][j]['hours']);
@@ -67,11 +66,6 @@ class ChartSection1 extends Component {
         }
 
         // total (and average) reading 1-2, writing 1-2, etc
-
-
-
-
-
 
         // console.log("chartLab: " + labData['data']);
 

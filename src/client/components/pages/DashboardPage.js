@@ -20,19 +20,7 @@ const DashboardPage = () => {
             getLastQuarter();
         }
 
-            // console.log("effectQ: " + dataQuarter);
-            // console.log("effectY: " + dataYear);
         //     getLastData();
-        //     console.log("labDataEffect: " + labData);
-        //     console.log("profDataEffect: " + profData);
-        //     for(let prop in labData) {
-        //         console.log("lab prop: " + prop);
-        //     }
-        // for(let prop in profData) {
-        //     console.log("prof prop: " + prop);
-        // }
-
-
     });
 
     const getLastData = async () => {

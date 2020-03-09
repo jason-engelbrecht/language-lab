@@ -30,16 +30,16 @@ const AdminCardSection1 = (props) => {
 
         var hoursGTFive = 0;
         var totalHours = 0;
-        for (let i = 0; i < labStudents.length; i++) {
+        for (let i = 0; i < students.length; i++) {
             for (let j = 0; j < labStudents.length; j++) {
-                if(students[i].first_name === labStudents[i].first_name && students[i].last_name === labStudents[i].last_name) {
-                    students[i].hours = labStudents[i].hours;
+                if(students[i].sid === labStudents[j].sid) {
+                    students[i].hours = labStudents[j].hours;
                 }
 
             }
-            if(labStudents[i].hours) {
-                totalHours += parseInt(labStudents[i].hours);
-                if(labStudents[i].hours > 5) {
+            if(students[i].hours) {
+                totalHours += parseInt(students[i].hours);
+                if(students[i].hours > 5) {
                     hoursGTFive++;
                 }
             }
