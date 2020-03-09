@@ -1,5 +1,9 @@
-.table-wrapper-scroll-y#tablee {
-  max-height: 280px;
+.table-wrapper-scroll-y#table {
+  max-height: 250px;
+}
+
+table#table {
+  cursor: pointer;
 }
 
 body{
@@ -211,14 +215,61 @@ main {
   }
 }
 
+#hamburger {
+  display: none;
+}
+
+#hamburger > .active {
+  background-color: #49505B;
+}
+
 @media only screen and (max-width: 768px) {
   #sideNav {
     display:none;
   }
+
+  #hamburger {
+    display: block;
+  }
+
   #content{
-    margin-left: 0px;
-    padding: 0!important;
+    margin-top: 20px;
+    padding-left: 8px!important;
+    padding-right: 8px!important;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  #topNav.shadow {
+    display: block;
+  }
+
+  .flexible-navbar {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.16), 2px 2px 10px rgba(0, 0, 0, 0.12);
+  }
+
+  #uploads {
+    margin-top: 30px!important;
+  }
+
+  #proficiency, #labHours {
+    width: auto;
+    height: auto;
+  }
+
+  .activeClass {
+    background-color: #d2d2d2;
   }
 }
 
+.hide {
+  display: none;
+}
 
+.show {
+  display: block;
+}
+
+.empty#dash {
+  height: 290px;
+}

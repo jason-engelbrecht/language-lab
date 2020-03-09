@@ -1,14 +1,56 @@
 import React, { Component } from 'react';
-import { MDBNavbar, MDBNavbarBrand } from 'mdbreact';
+import {
+    MDBCollapse, MDBContainer, MDBLink,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarNav,
+    MDBNavbarToggler,
+    MDBNavItem,
+    MDBNavLink,
+} from 'mdbreact';
 
 class TopNavigation extends Component {
+
+    state = {
+        collapseID: ''
+    };
+
+    toggleCollapse = collapseID => () => {
+        this.setState(prevState => ({
+            collapseID: prevState.collapseID !== collapseID ? collapseID : ''
+        }));
+    };
+
     render() {
         return (
-            <MDBNavbar className="flexible-navbar pl-2" light expand="md" fixed="top">
-                <MDBNavbarBrand href="/">
-                    <h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"></i>The Language Lab</h3>
-                </MDBNavbarBrand>
-            </MDBNavbar>
+            <MDBContainer>
+                <MDBNavbar className="flexible-navbar" light expand="md" fixed="top" id="topNav">
+                    <MDBNavbarBrand to='/'>
+                        <MDBLink to='/'><h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"/>The Language Lab</h3></MDBLink>
+                    </MDBNavbarBrand>
+                    {/*hamburger menu*/}
+                    <MDBNavbarToggler
+                        onClick={this.toggleCollapse('navbarCollapse1')}
+                    />
+                    <MDBCollapse
+                        id='navbarCollapse1'
+                        isOpen={this.state.collapseID}
+                        navbar
+                    >
+                        <MDBNavbarNav left id="hamburger">
+                            <MDBNavItem>
+                                <MDBNavLink exact={true} activeClassName="activeClass" className="pl-2" to='/'>Home</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/profile'>Profile</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/uploads'>Uploads</MDBNavLink>
+                            </MDBNavItem>
+                        </MDBNavbarNav>
+                    </MDBCollapse>
+                </MDBNavbar>
+            </MDBContainer>
         );
     }
 }

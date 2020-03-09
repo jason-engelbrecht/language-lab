@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import FileUpload from "./FileUpload";
-import {MDBCardBody, MDBCol, MDBContainer, MDBFormInline, MDBInput, MDBInputGroup, MDBRow} from "mdbreact";
+import {MDBCol, MDBFormInline, MDBInput, MDBInputGroup, MDBRow} from "mdbreact";
 class Radio extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { status: 1, language: '', staffing: '', quarter: '', year: '' }; // show first radio button by default
+        this.state = { status: 2, language: '', staffing: '', quarter: '', year: '' }; // show first radio button by default
     }
 
     radioHandler = (status) => {
@@ -33,7 +33,7 @@ class Radio extends Component {
 
         function proficiency() {
             return <>
-                <div  className="mt-3">
+                <div  className="mt-4">
                     <FileUpload inputID="file1" quarter={quarter} year={year} />
                 </div>
 
@@ -91,34 +91,30 @@ class Radio extends Component {
                 <MDBRow>
                     <MDBCol size="7">
                         <MDBFormInline className="ml-3">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="data"
-                                    // containerClass='mr-1'
-                                    checked={status === 1}
-                                    onClick={(e) => this.radioHandler(1)}
-                                    // label="Student Class & Proficiency Data"
-                                    // labelClass="ml-2"
-                                    id="proficiency"
-                                    className="mr-3"
-                                    />
-                                    Student Class & Proficiency Data</label>
+                            <MDBInput
+                                type="radio"
+                                name="data"
+                                // containerClass='mr-1'
+                                checked={status === 1}
+                                onClick={(e) => this.radioHandler(1)}
+                                label="Student Class & Proficiency Data"
+                                labelClass="ml-2"
+                                id="proficiency"
+                                className="mr-3"
+                                />
                         </MDBFormInline>
-                        <MDBFormInline className="ml-3 mt-3">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="hours"
-                                    // containerClass='mr-1'
-                                    checked={status === 2}
-                                    onClick={(e) => this.radioHandler(2)}
-                                    // label="Student Language Lab Hours"
-                                    // labelClass="ml-2"
-                                    id="labHours"
-                                    className="mr-3"
-                                    />
-                                    Student Language Lab Hours</label>
+                        <MDBFormInline className="ml-3">
+                            <MDBInput
+                                type="radio"
+                                name="hours"
+                                // containerClass='mr-1'
+                                checked={status === 2}
+                                onClick={(e) => this.radioHandler(2)}
+                                label="Student Language Lab Hours"
+                                labelClass="ml-2"
+                                id="labHours"
+                                className="mr-3"
+                                />
                         </MDBFormInline>
                     </MDBCol>
                     <MDBCol size="5">
@@ -132,7 +128,6 @@ class Radio extends Component {
                             <MDBInputGroup className="mt-1" hint="Enter Year" onChange={yearChange}/>
                     </MDBCol>
                 </MDBRow>
-
 
                 {status === 1 && proficiency()}
                 {status === 2 && labHours()}

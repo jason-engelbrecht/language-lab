@@ -7,6 +7,7 @@ import {
     MDBTableHead
 } from 'mdbreact';
 import * as api from '../../../api';
+import {clickedTR} from "./RecentUploads";
 
 class UploadPreview extends Component {
     state = {};
@@ -14,20 +15,22 @@ class UploadPreview extends Component {
 
     constructor() {
         super();
-        this.getRecentData();
+        this.getRecentTRData();
     }
 
-    getRecentData = () => {
-        api.fetchRecentData().then(recentData => {
-            // console.log("Recent: " + recentData[0].data);
-            recentData = recentData[0].data;
-            this.setState({recentData});
-            // console.log(recentData);
-        });
+    getRecentTRData = () => {
+        if (clickedTR.clickedFile !== '') {
+            api.fetchRecentTRData(clickedTR.clickedFile).then(recentData => {
+                // console.log("Recent: " + recentData[0].data);
+                recentData = recentData[0].data;
+                this.setState({recentData});
+                console.log("clicked: " + clickedTR);
+            });
+        }
     };
 
     componentDidMount() {
-        this.interval = setInterval(this.getRecentData.bind(this), 5000);
+        this.interval = setInterval(this.getRecentTRData.bind(this), 500);
     }
 
     componentWillUnmount() {
@@ -47,7 +50,7 @@ class UploadPreview extends Component {
 
 
         return (
-            <MDBCard>
+            <MDBCard className="hide" id="hide">
                 <MDBCardBody>
                     <MDBTable hover responsive>
                         <MDBTableHead color="green lighten-1">

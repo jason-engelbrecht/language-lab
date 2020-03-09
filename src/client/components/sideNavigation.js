@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 
 const TopNavigation = () => {
     return (
-        <div className="sidebar-fixed position-fixed ">
+        <div className="sidebar-fixed position-fixed show" id="sideNav">
             <h1 className="text-center mt-2 mb-4">
                 <a href="#" className="our-text display-none">
-                    <i className="fas fa-language text-white"></i>
+                    <i className="fas fa-language text-white"> </i>
                 </a>
             </h1>
 
@@ -40,6 +40,6 @@ const TopNavigation = () => {
             </MDBListGroup>
         </div>
     );
-}
+};
 
 export default TopNavigation;

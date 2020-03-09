@@ -22,6 +22,17 @@ router.get('/recentdata', (req, res) => {
   });
 });
 
+//gets data from clicked row
+router.get('/recenttrdata/:id', (req, res) => {
+  var clickedData = req.params.id;
+
+  //finds clicked row by row object id
+  UploadModel.find({_id: clickedData}).select('data').sort({'date' : -1}).limit(1).exec((err, recentdata) => {
+    if (err) console.log('failure');
+    res.send({recentdata});
+  });
+});
+
 router.get('/lab/:quarter/:year', (req, res) => {
   var lastQ = req.params.quarter;
   var lastY = req.params.year;

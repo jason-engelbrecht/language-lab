@@ -122,6 +122,8 @@ const DashboardPage = () => {
                         <button onClick={getRecentData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
                     </div>
                 </div>
+                <div className="empty" id="dash"> </div>
+
             </React.Fragment>
         )
     }
