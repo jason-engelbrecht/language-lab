@@ -4,7 +4,7 @@ import { MDBCard, MDBCardBody, MDBIcon, MDBRow, MDBCol, MDBCardText } from 'mdbr
 const AdminCardSection1 = (props) => {
     let labData = props.labData;
     let profData = props.profData;
-
+    var language = props.language;
     // for (let prop in labData) {
     //     console.log(prop + ": " + props.labData[prop].length);
     // }
@@ -15,18 +15,35 @@ const AdminCardSection1 = (props) => {
     //     console.log("count: " + profData['data'].length);
     // }
 
-    if(labData && labData.hasOwnProperty('data') && profData && profData.hasOwnProperty('data')) {
+    if(labData && profData && profData.hasOwnProperty('data')) {
 
         // link the data
         var students = [];
         for (let prop in profData['data']) {
-            students.push(profData['data'][prop]);
+            if(profData['data'].hasOwnProperty(prop)) {
+                // console.log("profData language: " + profData['data'][prop]['current_class']);
+
+                if(language === 'all') {
+                    students.push(profData['data'][prop]);
+                } else {
+                    let langTwo = language.substr(0, 2).toLowerCase();
+                    let studentTwo = profData['data'][prop]['current_class'].substr(0, 2).toLowerCase();
+                    if(langTwo === studentTwo) {
+                        students.push(profData['data'][prop]);
+                    }
+                }
+            }
         }
 
         var labStudents = [];
-        for(let prop in labData['data']) {
-            labStudents.push(labData['data'][prop]);
+        // for(let prop in labData) {
+        //     labStudents.push(labData[prop]);
+        // }
+        for (let i = 0; i < labData.length; i++) {
+            labStudents.push(labData[i]);
         }
+
+        console.log("length: " + labStudents.length);
 
         var hoursGTFive = 0;
         var totalHours = 0;
@@ -55,7 +72,7 @@ const AdminCardSection1 = (props) => {
                             <div className="data">
                                 <p>Total Students</p>
                                 <h4>
-                                    <strong>{profData['data'] ? profData['data'].length : 'No Data'}</strong>
+                                    <strong>{students ? students.length : 'No Data'}</strong>
                                 </h4>
                             </div>
                         </div>
@@ -76,7 +93,7 @@ const AdminCardSection1 = (props) => {
                             <div className="data">
                                 <p>Students in the Lab</p>
                                 <h4>
-                                    <strong>{labData['data'] ? labData['data'].length : 'No Data'}</strong>
+                                    <strong>{labStudents ? labStudents.length : 'No Data'}</strong>
                                 </h4>
                             </div>
                         </div>
