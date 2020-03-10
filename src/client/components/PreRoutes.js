@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import './PreCss.css';
 
 class PreRoutes extends React.Component {
   render() {

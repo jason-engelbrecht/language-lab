@@ -1,5 +1,5 @@
 import express from 'express';
-import {UploadModel, ProficiencyModel} from './database';
+import {UploadModel, ProficiencyModel, UserModel} from './database';
 
 //start router
 const router = express.Router();
@@ -50,6 +50,21 @@ router.get('/proficiency/:quarter/:year', (req, res) => {
   ProficiencyModel.find({quarter : lastQ, year: lastY}).exec( (err, quarterData) => {
     if(err) console.error("error retrieving proficiency data: " + err);
     res.send({quarterData});
+  });
+});
+
+
+// POST route to register a user
+router.post('/register', (req, res) => {
+  const { email, password } = req.body;
+  const user = new UserModel({ email, password });
+  user.save(function(err) {
+    if (err) {
+      res.status(500)
+        .send("Error registering new user please try again.");
+    } else {
+      res.status(200).send("Welcome to the club!");
+    }
   });
 });
 

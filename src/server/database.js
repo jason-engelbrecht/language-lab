@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 //connect to mongo w mongoose
 
@@ -14,7 +15,6 @@ db.once('open', function() {
 //create upload schema
 let uploadSchema = new mongoose.Schema({
   filename: String,
-  // data: Array,
   quarter: String,
   year: String,
   language: String,
@@ -51,8 +51,12 @@ let proficiencySchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-//create upload model w schema and collection
+let userSchema = new mongoose.Schema({
+  email: String,
+  password: String
+});
+
+//export models
 export const UploadModel = mongoose.model('Test', uploadSchema, 'TestData');
 export const ProficiencyModel = mongoose.model('Proficiency', proficiencySchema, 'ProficiencyData');
-
-// export default UploadModel;
+export const UserModel = mongoose.model('Users', userSchema, 'Users');

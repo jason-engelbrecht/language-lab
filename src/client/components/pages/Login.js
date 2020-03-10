@@ -1,5 +1,4 @@
 import React from 'react'
-import './PreCss.css';
 import { Link } from 'react-router-dom';
 
 const Login =  () => {
@@ -7,7 +6,7 @@ const Login =  () => {
     <div className="container">
       <h2 className="text-center text-white"><i className="fas fa-language"></i> The Language Lab</h2>
       <div className="card mx-auto" style={{width: "22rem"}}>
-        <form className="p-5" action="">
+        <form className="p-5">
 
           <h4 className="mb-4 text-center">Sign in</h4>
 

@@ -10,6 +10,9 @@ import fs from 'fs';
 //serve public files statically and enable file uploads on server
 server.use(express.static('public'), fileUpload());
 
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+
 //bring in the api router
 server.use('/api', router);
 
