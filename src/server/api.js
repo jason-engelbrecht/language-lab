@@ -4,12 +4,22 @@ import {UploadModel, ProficiencyModel} from './database';
 //start router
 const router = express.Router();
 
+
 //get recent uploads
 router.get('/recentuploads', (req, res) => {
   //find all, select filename property, execute callback sending result
   UploadModel.find({}).select('filename date').sort({'date' : -1}).exec((err, recentUploads) => {
     if (err) console.log('failure');
-    res.send({recentUploads});
+    res.json({recentUploads});
+  });
+});
+
+//get recent uploads
+router.get('/proficiency', (req, res) => {
+  //find all, select filename property, execute callback sending result
+  ProficiencyModel.find({}).select('filename date').sort({'date' : -1}).exec((err, proficiency) => {
+    if (err) console.log('failure');
+    res.json({proficiency});
   });
 });
 

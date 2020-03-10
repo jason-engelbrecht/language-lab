@@ -5,7 +5,7 @@ class Radio extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { status: 2, language: '', staffing: '', quarter: '', year: '' }; // show first radio button by default
+        this.state = { status: 1, language: '', staffing: '', quarter: '', year: '' }; // show first radio button by default
     }
 
     radioHandler = (status) => {

@@ -7,13 +7,19 @@ export const fetchRecentUploads = () => {
     .then(resp => resp.data.recentUploads);
 };
 
+//fetch recent uploads from api
+export const fetchProficiencyUploads = () => {
+  return axios.get(`/api/proficiency`)
+      .then(resp => resp.data.proficiency);
+};
+
 //fetch recent uploaded data from api
 export const fetchRecentData = () => {
   return axios.get(`/api/recentdata`)
       .then(resp => resp.data.recentdata);
 };
 
-//CLICKED
+//fetch clicked table row data from api
 export const fetchRecentTRData = (id) => {
   return axios.get(`/api/recenttrdata/${id}`)
       .then(resp => resp.data.recentdata);
