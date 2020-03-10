@@ -61,12 +61,8 @@ router.post('/register', (req, res) => {
 
   //save user
   user.save((err) => {
-    if (err) {
-      res.status(500)
-        .send("Error registering new user please try again.");
-    } else {
-      res.status(200).send("Welcome to the club!");
-    }
+    if (err) console.log('registration failed')
+    else console.log('user added');
   });
 });
 
