@@ -35,3 +35,10 @@ export const registerUser = (email, password) => {
     password: password
   }).then(res => res.data)
 };
+
+export const findUser = (email, password) => {
+  return axios.post(`/api/login`, {
+    email: email,
+    password: password
+  }).then(res => res.data)
+};

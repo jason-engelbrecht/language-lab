@@ -1,4 +1,5 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
 import {UploadModel, ProficiencyModel, UserModel} from './database';
 
 //start router
@@ -63,6 +64,29 @@ router.post('/register', (req, res) => {
   user.save((err) => {
     if (err) console.log('registration failed')
     else console.log('user added');
+  });
+});
+
+//verify user
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  //find w email, check password
+  UserModel.findOne({ email: email }).exec((err, user) => {
+    if(err) console.log('find error');
+    else {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if(err) console.log('compare error');
+        else if(result) {
+          console.log('Logged in');
+          res.send({ success: true });
+        }
+        else {
+          console.log('wrong password');
+          res.send({ success: false })
+        }
+      });
+    }
   });
 });
 
