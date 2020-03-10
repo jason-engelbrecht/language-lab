@@ -17,6 +17,7 @@ const FileUpload = (props) => {
     const [uploadedFile, setUploadedFile] = useState({});
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
+    const [msgType, setMsgType] = useState('');
 
     const fileChange = e => {
         // html file input allows multiples so stores as an array
@@ -44,23 +45,28 @@ const FileUpload = (props) => {
 
         try {
             const res = await axios.post(`/upload/${reportType}`, formData, {
+
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
                 onUploadProgress: progressEvent => {
+                    setMsgType('warning');
+                    setMessage('Securing Student IDs');
                     setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)));
                     // Clear after 10 seconds
-                    setTimeout(() => {
-                        setUploadPercentage(0);
-                        setFilename('');
-                    }, 10000);
                 }
             });
             const {filename, filePath} = res.data;
             setUploadedFile( { filename, filePath });
+            setMsgType('success');
             setMessage('File Uploaded: ' + filename);
+            setTimeout(() => {
+                setUploadPercentage(0);
+                setFilename('');
+            }, 10000);
             console.log(res.data);
         } catch(err) {
+            setMsgType('danger');
             if(err.response.status === 500) {
                 setMessage('There was a problem with the server.');
             } else {
@@ -71,7 +77,7 @@ const FileUpload = (props) => {
 
     return(
         <Fragment>
-            { message ? <Message msg={message}/> : null }
+            { message ? <Message msg={message} msgType={msgType}/> : null }
             <form className="input-group" onSubmit={onSubmit}>
                 <div className="custom-file">
                     {/*runs the 'onchange' function onchange*/}

@@ -22,8 +22,8 @@ let uploadSchema = new mongoose.Schema({
   data: [
     {
       sid: String,
-      first_name: String,
-      last_name: String,
+      // first_name: String,
+      // last_name: String,
       hours: Number,
       currentClass: String,
       language: String
@@ -39,8 +39,8 @@ let proficiencySchema = new mongoose.Schema({
   data: [
     {
       sid: String,
-      first_name: String,
-      last_name: String,
+      // first_name: String,
+      // last_name: String,
       speaking: Number,
       listening: Number,
       reading: Number,

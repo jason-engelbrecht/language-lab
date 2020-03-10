@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import AdminCardSection1 from './upload_sections/AdminCardSection1';
-import ChartSection1 from './upload_sections/ChartSection1';
+import AdminCardSection1 from './report_sections/AdminCardSection1';
+import ChartSection1 from './report_sections/ChartSection1';
 import * as api from '../../api';
-import {ReportLanguageSelect} from "./upload_sections/ReportLanguageSelect";
+import {ReportLanguageSelect} from "./report_sections/ReportLanguageSelect";
 
 const DashboardPage = () => {
     const [labData, setLab] = useState([]);
