@@ -14,7 +14,7 @@ server.use(express.static('public'), fileUpload());
 server.use('/api', router);
 
 //base routes
-server.get(['/', '/uploads', '/profile'], (req, res) => {
+server.get(['/', '/uploads', '/profile', '/login', '/register'], (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 

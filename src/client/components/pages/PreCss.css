@@ -1,0 +1,14 @@
+body {
+    background: rgb(145,255,161);
+    background: linear-gradient(121deg, rgba(145,255,161,1) 0%, rgba(67,160,71,1) 50%);
+    height: 750px
+}
+
+.md-form input:focus {
+    border-bottom: 1px solid #43A047 !important;
+    box-shadow: 0 1px 0 0 #43A047 !important;
+}
+
+.active {
+    color: #43A047 !important;
+}
