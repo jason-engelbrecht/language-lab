@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 //connect to mongo w mongoose
-
 mongoose.connect('mongodb://localhost:27017/LLTest', {useNewUrlParser: true});
 // mongoose.connect('mongodb://Boolean:Hooligans1@ds023442.mlab.com:23442/heroku_8tbqhjvr', {useNewUrlParser: true});
 
@@ -54,6 +54,25 @@ let proficiencySchema = new mongoose.Schema({
 let userSchema = new mongoose.Schema({
   email: String,
   password: String
+});
+
+//before save - hash password
+userSchema.pre('save', function(next) {
+  //check if document is new or a new password has been set
+  if (this.isNew || this.isModified('password')) {
+    //save reference to this because of changing scopes
+    const document = this;
+
+    //hash the password
+    bcrypt.hash(document.password, saltRounds, function(err, hashedPassword) {
+      if (err) next(err);
+      else {
+        document.password = hashedPassword;
+        next();
+      }
+    });
+  }
+  else next();
 });
 
 //export models

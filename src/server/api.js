@@ -53,12 +53,14 @@ router.get('/proficiency/:quarter/:year', (req, res) => {
   });
 });
 
-
-// POST route to register a user
+//register a user
 router.post('/register', (req, res) => {
+  //get email & password from req and create new model
   const { email, password } = req.body;
   const user = new UserModel({ email, password });
-  user.save(function(err) {
+
+  //save user
+  user.save((err) => {
     if (err) {
       res.status(500)
         .send("Error registering new user please try again.");

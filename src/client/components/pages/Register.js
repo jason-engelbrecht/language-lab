@@ -23,7 +23,7 @@ class Register extends Component {
       <div className="container">
         <h2 className="text-center text-white"><i className="fas fa-language"></i> The Language Lab</h2>
         <div className="card mx-auto" style={{width: "22rem"}}>
-          <form className="p-5" onSubmit={this.handleSubmit}>
+          <form className="p-5" onSubmit={this.handleSubmit} autoComplete="on">
 
             <h4 className="mb-4 text-center">Register</h4>
 
@@ -31,7 +31,8 @@ class Register extends Component {
               <input type="email"
                      id="email"
                      className="form-control"
-                     ref="email"/>
+                     ref="email"
+                     autoComplete="email"/>
               <label htmlFor="email">Email</label>
             </div>
 
@@ -39,7 +40,8 @@ class Register extends Component {
               <input type="password"
                      id="password"
                      className="form-control"
-                     ref="password"/>
+                     ref="password"
+                     autoComplete="new-password"/>
               <label htmlFor="password">Password</label>
               <small id="password-helper" className="form-text text-muted">
                 Must be at least 8 characters long
