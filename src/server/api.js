@@ -1,6 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import withAuth from './middleware';
+import secret from './secret';
 import {UploadModel, ProficiencyModel, UserModel} from './database';
 
 //start router
@@ -68,9 +70,6 @@ router.post('/register', (req, res) => {
   });
 });
 
-//this is not good
-const mysecret = 'apple-pie';
-
 //verify user
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -88,7 +87,7 @@ router.post('/login', (req, res) => {
 
           //issue token, email as payload, using my secret, 24h expiration
           const payload = { email };
-          const token = jwt.sign(payload, mysecret, {
+          const token = jwt.sign(payload, secret, {
             expiresIn: '24h'
           });
 
@@ -106,6 +105,11 @@ router.post('/login', (req, res) => {
       });
     }
   });
+});
+
+//testing authorization
+router.get('/test', withAuth, (req, res) => {
+  res.send({hello: 'hello'});
 });
 
 export default router;
