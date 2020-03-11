@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import TopNavigation from './topNavigation';
 import SideNavigation from './sideNavigation';
 import Footer from './Footer';
+import withAuth from '../withAuth';
 
 class Routes extends React.Component {
 
@@ -39,15 +40,15 @@ class Routes extends React.Component {
         </Route>
 
         <Route path='/dashboard' exact>
-          {this.renderNavWith(DashboardPage)}
+          {this.renderNavWith(withAuth(DashboardPage))}
         </Route>
 
         <Route path='/profile' exact>
-          {this.renderNavWith(ProfilePage)}
+          {this.renderNavWith(withAuth(ProfilePage))}
         </Route>
 
         <Route path='/uploads' exact>
-          {this.renderNavWith(Uploads)}
+          {this.renderNavWith(withAuth(Uploads))}
         </Route>
       </Switch>
     );

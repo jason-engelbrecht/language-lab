@@ -42,3 +42,7 @@ export const findUser = (email, password) => {
     password: password
   }).then(res => res)
 };
+
+export const checkToken = () => {
+  return axios.get(`/api/checkToken`).then(res => res)
+};
