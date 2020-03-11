@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import * as api from '../../api';
+import './Login.css';
 
 class Register extends Component {
   state = {

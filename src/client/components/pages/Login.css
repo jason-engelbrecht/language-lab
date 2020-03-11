@@ -5,10 +5,10 @@ body {
 }
 
 .md-form input:focus {
-    border-bottom: 1px solid #43A047 !important;
-    box-shadow: 0 1px 0 0 #43A047 !important;
+    border-bottom: 1px solid #00c851 !important;
+    box-shadow: 0 1px 0 0 #00c851 !important;
 }
 
 .active {
-    color: #43A047 !important;
+    color: #00c851 !important;
 }
