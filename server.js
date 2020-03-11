@@ -1,17 +1,19 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
+import fs from 'fs';
 import excelToJson from 'convert-excel-to-json';
 import {UploadModel, ProficiencyModel} from './src/server/database';
 import router from './src/server/api';
 const path = require('path');
 const server = express();
-import fs from 'fs';
 
 //serve public files statically and enable file uploads on server
 server.use(express.static('public'), fileUpload());
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
+server.use(cookieParser());
 
 //bring in the api router
 server.use('/api', router);

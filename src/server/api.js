@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import {UploadModel, ProficiencyModel, UserModel} from './database';
 
 //start router
@@ -67,6 +68,9 @@ router.post('/register', (req, res) => {
   });
 });
 
+//this is not good
+const mysecret = 'apple-pie';
+
 //verify user
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -77,10 +81,24 @@ router.post('/login', (req, res) => {
     else {
       bcrypt.compare(password, user.password, (err, result) => {
         if(err) console.log('compare error');
+
+        //successful login
         else if(result) {
           console.log('Logged in');
-          res.send({ success: true });
+
+          //issue token, email as payload, using my secret, 24h expiration
+          const payload = { email };
+          const token = jwt.sign(payload, mysecret, {
+            expiresIn: '24h'
+          });
+
+          //send cookie w token
+          res.cookie('token', token, { httpOnly: true })
+            .sendStatus(200);
+
+          /*res.send({ success: true });*/
         }
+
         else {
           console.log('wrong password');
           res.send({ success: false })
