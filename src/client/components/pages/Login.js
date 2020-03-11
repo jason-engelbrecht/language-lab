@@ -13,8 +13,12 @@ class Login extends Component {
 
     //check in db for match
     if(email && password) {
-      api.findUser(email, password);
-      //do something if success == true
+      api.findUser(email, password).then(success => {
+        console.log(success);
+        if(success) {
+          //do something
+        }
+      });
     }
   };
 
