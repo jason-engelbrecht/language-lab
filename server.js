@@ -19,7 +19,7 @@ server.use(cookieParser());
 server.use('/api', router);
 
 //base routes
-server.get(['/', '/uploads', '/profile', '/login', '/register'], (req, res) => {
+server.get(['/', '/dashboard', '/uploads', '/profile', '/login', '/register'], (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
