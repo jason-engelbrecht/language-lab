@@ -94,17 +94,20 @@ router.post('/login', (req, res) => {
           //send cookie w token
           res.cookie('token', token, { httpOnly: true })
             .sendStatus(200);
-
-          /*res.send({ success: true });*/
         }
 
         else {
           console.log('wrong password');
-          res.send({ success: false })
+          res.sendStatus(401);
         }
       });
     }
   });
+});
+
+//check for valid token
+router.get('/checkToken', withAuth, (req, res) => {
+  res.sendStatus(200);
 });
 
 //testing authorization

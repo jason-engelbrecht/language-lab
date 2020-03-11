@@ -40,5 +40,5 @@ export const findUser = (email, password) => {
   return axios.post(`/api/login`, {
     email: email,
     password: password
-  }).then(res => res.data.success)
+  }).then(res => res)
 };
