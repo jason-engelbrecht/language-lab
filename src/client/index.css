@@ -183,8 +183,8 @@ main {
 }
 
 @media (min-width: 1199.98px) {
-  body {
-    padding-top: 70px;
+  #content {
+    margin-top: 70px;
   }
 }
 
@@ -197,8 +197,8 @@ main {
     margin-top: 2.5rem;
   }
 
-  body {
-    padding-top: 25px;
+  #content {
+    margin-top: 25px;
   }
 }
 
@@ -210,8 +210,8 @@ main {
   #breadcrumb{
     flex-direction: column;
   }
-  body {
-    padding-top: 25px;
+  #content {
+    margin-top: 25px;
   }
 }
 
@@ -233,7 +233,7 @@ main {
   }
 
   #content{
-    margin-top: 20px;
+    margin-top: 50px;
     padding-left: 8px!important;
     padding-right: 8px!important;
     margin-left: 0;
