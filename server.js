@@ -3,8 +3,11 @@ import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import excelToJson from 'convert-excel-to-json';
-import {UploadModel, ProficiencyModel} from './src/server/database';
+import {ProficiencyModel, UploadModel} from './src/server/database';
 import router from './src/server/api';
+import fs from 'fs';
+import crypto from 'crypto';
+
 const path = require('path');
 const server = express();
 
@@ -25,6 +28,9 @@ server.get(['/', '/dashboard', '/uploads', '/users', '/login', '/register'], (re
 
 //maybe move to api
 server.post('/upload/lab', (req, res) => {
+
+    // console.log("crypto1: " + hash.update('123456789'));
+    // console.log("crypto2: " + hash.update('123456789'));
     if(req.files === null) {
         return res.status(400).json({ msg: "No file uploaded" });
     }
@@ -99,11 +105,16 @@ server.post('/upload/lab', (req, res) => {
             // ignore empty rows
             if(studentData[i]['Student ID#']) {
                 // add new property names for mongoDB
-                studentData[i].sid = studentData[i]['Student ID#'];
-                studentData[i].first_name = studentData[i]['Student First Name'];
-                studentData[i].last_name = studentData[i]['Student Last Name'];
+
+                const hash = crypto.createHash('SHA3-512');
+                const sid = studentData[i]['Student ID#'].toString().trim();
+                hash.update(sid);
+                studentData[i].sid = hash.digest('hex');
+                // studentData[i].first_name = studentData[i]['Student First Name'];
+                // studentData[i].last_name = studentData[i]['Student Last Name'];
                 studentData[i].hours = studentData[i]['Hours in the Lab'];
                 // remove the old property names
+                delete studentData[i]['Student ID#'];
                 delete studentData[i]['Student First Name'];
                 delete studentData[i]['Student Last Name'];
                 delete studentData[i]['Hours in the Lab'];
@@ -167,6 +178,7 @@ server.post('/upload/lab', (req, res) => {
 
 //maybe move to api
 server.post('/upload/proficiency', (req, res) => {
+
     if(req.files === null) {
         return res.status(400).json({ msg: "No file uploaded" });
     }
@@ -271,16 +283,19 @@ server.post('/upload/proficiency', (req, res) => {
                     let studentData = {};
                     studentData.language = actfl[item]['Language'];
                     studentData.itemNumber = actfl[item]['ItemNumber'];
-                    let sid = actfl[item]['SID'];
-                    studentData.sid = sid;
-                    let student = students.find(student => student['SID'] === sid);
-                    let name = student['FullName'];
-                    let fullName = name.split(' ');
+                    // encrypt SID
+                    const hash = crypto.createHash('SHA3-512');
+                    const sid = actfl[item]['SID'].toString().trim();
+                    hash.update(sid);
+                    studentData.sid = hash.digest('hex');
+                    // find the matching encrypted SID
+                    let student = students.find(student => student['SID'].toString().trim() === sid);
+                    // let name = student['FullName'];
+                    // let fullName = name.split(' ');
                     let currentClass = classDummy.
                                         find(level => level['ItemNumber'] === actfl[item]['ItemNumber']);
                     studentData.current_class = currentClass['CourseID'];
-                    studentData.first_name = fullName[0];
-                    studentData.last_name = fullName[1];
+                    // studentData.first_name = fullName[0];
                     studentData.speaking = actfl[item]['SPEAKING'];
                     studentData.writing = actfl[item]['WRITING'];
                     studentData.listening = actfl[item]['LISTENING'];
@@ -305,7 +320,7 @@ server.post('/upload/proficiency', (req, res) => {
 
         //upload to db and meow
         async function showUploaded() {
-            await upload.save().then(() => console.log('uploaded...meow'));
+            await upload.save().then(() => console.log('uploaded...woof'));
             // query the db for the data just uploaded
             let q = UploadModel.find().sort({'date' : -1}).limit(1);
             q.exec(function(error, doc) {

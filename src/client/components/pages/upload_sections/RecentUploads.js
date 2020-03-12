@@ -4,7 +4,7 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardHeader,
-  MDBIcon,
+  MDBIcon, MDBRow,
   MDBTableBody,
 } from 'mdbreact';
 
@@ -21,18 +21,35 @@ class RecentUploads extends Component {
   constructor(props) {
     super(props);
     this.getRecentUploads();
+    this.state = { quarter: ''};
   }
 
   //use api endpoint to get recent uploads, setting state
   getRecentUploads = () => {
-    api.fetchRecentUploads().then(recentUploads => {
-      recentUploads.map(function(file) {
+    var recentUploads = [];
+    api.fetchProficiencyUploads().then(recentProciency => {
+      recentProciency.map(function(file) {
         let date = new Date(file.date);
         let month = date.getMonth() + 1;
         let day = date.getDate();
         let year = date.getFullYear();
         file.date = month + "/" + day + "/" + year;
+        recentUploads.push(file);
+        console.log("prof file: " + file.date);
+      })
+    });
+    api.fetchRecentUploads().then(recentUp => {
+      recentUp.map(function(file) {
+        let date = new Date(file.date);
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let year = date.getFullYear();
+        file.date = month + "/" + day + "/" + year;
+        recentUploads.push(file);
+        console.log("recent file: " + file.date);
       });
+
+      console.log("Uploads: " + recentUploads);
       this.setState({recentUploads});
     });
   };
@@ -46,7 +63,6 @@ class RecentUploads extends Component {
   }
 
   showRow(file) {
-
     //shows table once a row is clicked
     var NAME = document.getElementById("hide");
     NAME.className="show";
@@ -56,16 +72,32 @@ class RecentUploads extends Component {
     clickedTR = {
       clickedFile: id
     };
-
   }
 
-
+  quarterHandler = (quarter) => {
+    this.setState({quarter});
+  };
 
   render() {
+
+    const quarterChange = (e) => {
+      this.quarterHandler(e.target.value);
+    };
+
     return (
         <MDBCard className="flex-fill">
           <MDBCardHeader color="green">
-            <h5 className="mb-1 font-weight-normal"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
+            <MDBRow className="pr-1">
+              <h5 className="mb-1 mt-1 font-weight-normal col-8"><MDBIcon icon="list-ul" className="mr-2"/>Recent Uploads</h5>
+              <select className="custom-select browser-default col-3" onChange={quarterChange}>
+                <option>Quarter</option>
+                <option value="Fall">Fall</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+              </select>
+            </MDBRow>
+
           </MDBCardHeader>
           <MDBCardBody id="cardTable">
             <table className="table table-wrapper-scroll-y my-custom-scrollbar" id="table">
