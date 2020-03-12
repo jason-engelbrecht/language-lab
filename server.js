@@ -5,7 +5,6 @@ import fs from 'fs';
 import excelToJson from 'convert-excel-to-json';
 import {ProficiencyModel, UploadModel} from './src/server/database';
 import router from './src/server/api';
-import fs from 'fs';
 import crypto from 'crypto';
 
 const path = require('path');
