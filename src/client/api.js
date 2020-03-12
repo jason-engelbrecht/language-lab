@@ -34,3 +34,21 @@ export const fetchProfData = (quarter, year) => {
   return axios.get(`/api/proficiency/${quarter}/${year}`)
       .then(res => res.data.quarterData)
 };
+
+export const registerUser = (email, password) => {
+  return axios.post(`/api/register`, {
+    email: email,
+    password: password
+  }).then(res => res.data)
+};
+
+export const findUser = (email, password) => {
+  return axios.post(`/api/login`, {
+    email: email,
+    password: password
+  }).then(res => res)
+};
+
+export const checkToken = () => {
+  return axios.get(`/api/checkToken`).then(res => res)
+};

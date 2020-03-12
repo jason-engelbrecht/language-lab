@@ -25,8 +25,8 @@ class TopNavigation extends Component {
         return (
             <MDBContainer>
                 <MDBNavbar className="flexible-navbar" light expand="md" fixed="top" id="topNav">
-                    <MDBNavbarBrand to='/'>
-                        <MDBLink to='/'><h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"/>The Language Lab</h3></MDBLink>
+                    <MDBNavbarBrand to='/dashboard'>
+                        <MDBLink to='/dashboard'><h3 className="our-text font-weight-normal"><i className="fas fa-language fa-lg mr-3"/>The Language Lab</h3></MDBLink>
                     </MDBNavbarBrand>
                     {/*hamburger menu*/}
                     <MDBNavbarToggler
@@ -39,13 +39,13 @@ class TopNavigation extends Component {
                     >
                         <MDBNavbarNav left id="hamburger">
                             <MDBNavItem>
-                                <MDBNavLink exact={true} activeClassName="activeClass" className="pl-2" to='/'>Home</MDBNavLink>
-                            </MDBNavItem>
-                            <MDBNavItem>
-                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/profile'>Profile</MDBNavLink>
+                                <MDBNavLink exact={true} activeClassName="activeClass" className="pl-2" to='/dashboard'>Home</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem>
                                 <MDBNavLink activeClassName="activeClass" className="pl-2" to='/uploads'>Uploads</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/users'>Users</MDBNavLink>
                             </MDBNavItem>
                         </MDBNavbarNav>
                     </MDBCollapse>

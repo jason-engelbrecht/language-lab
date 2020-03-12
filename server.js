@@ -1,5 +1,7 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
+import fs from 'fs';
 import excelToJson from 'convert-excel-to-json';
 import {ProficiencyModel, UploadModel} from './src/server/database';
 import router from './src/server/api';
@@ -12,11 +14,15 @@ const server = express();
 //serve public files statically and enable file uploads on server
 server.use(express.static('public'), fileUpload());
 
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+server.use(cookieParser());
+
 //bring in the api router
 server.use('/api', router);
 
 //base routes
-server.get(['/', '/uploads', '/profile'], (req, res) => {
+server.get(['/', '/dashboard', '/uploads', '/users', '/login', '/register'], (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
