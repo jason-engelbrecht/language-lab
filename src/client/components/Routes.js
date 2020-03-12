@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import DashboardPage from './pages/DashboardPage';
-import ProfilePage from './pages/ProfilePage';
+import Users from './pages/Users';
 import Uploads from './pages/Uploads';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -46,8 +46,8 @@ class Routes extends React.Component {
           {this.renderNavWith(withAuth(DashboardPage))}
         </Route>
 
-        <Route path='/profile' exact>
-          {this.renderNavWith(withAuth(ProfilePage))}
+        <Route path='/users' exact>
+          {this.renderNavWith(withAuth(Users))}
         </Route>
 
         <Route path='/uploads' exact>

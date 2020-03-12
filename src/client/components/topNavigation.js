@@ -42,10 +42,10 @@ class TopNavigation extends Component {
                                 <MDBNavLink exact={true} activeClassName="activeClass" className="pl-2" to='/dashboard'>Home</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem>
-                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/profile'>Profile</MDBNavLink>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/uploads'>Uploads</MDBNavLink>
                             </MDBNavItem>
                             <MDBNavItem>
-                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/uploads'>Uploads</MDBNavLink>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/users'>Users</MDBNavLink>
                             </MDBNavItem>
                         </MDBNavbarNav>
                     </MDBCollapse>

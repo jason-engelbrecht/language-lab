@@ -1,7 +1,7 @@
 import React from 'react'
 import { MDBCard, MDBCol, MDBRow, MDBView, MDBMask, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn, MDBIcon } from 'mdbreact';
 
-const ProfilePage =  () => {
+const Users =  () => {
   return (
     <React.Fragment>
         <MDBRow className="justify-content-center">
@@ -122,4 +122,4 @@ const ProfilePage =  () => {
   );
 }
 
-export default ProfilePage;
+export default Users;
