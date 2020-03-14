@@ -12,7 +12,7 @@ const router = express.Router();
 //get recent uploads
 router.get('/recentuploads', (req, res) => {
   //find all, select filename property, execute callback sending result
-  UploadModel.find({}).select('filename date').sort({'date' : -1}).exec((err, recentUploads) => {
+  UploadModel.find({}).select('filename date quarter year').sort({'date' : -1}).exec((err, recentUploads) => {
     if (err) console.log('failure');
     res.json({recentUploads});
   });
@@ -21,7 +21,7 @@ router.get('/recentuploads', (req, res) => {
 //get recent uploads
 router.get('/proficiency', (req, res) => {
   //find all, select filename property, execute callback sending result
-  ProficiencyModel.find({}).select('filename date').sort({'date' : -1}).exec((err, proficiency) => {
+  ProficiencyModel.find({}).select('filename date quarter year').sort({'date' : -1}).exec((err, proficiency) => {
     if (err) console.log('failure');
     res.json({proficiency});
   });

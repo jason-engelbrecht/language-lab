@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as api from '../../../api';
-import {MDBCard, MDBCardBody, MDBCardHeader, MDBIcon, MDBRow, MDBTable, MDBTableBody,} from 'mdbreact';
+import {MDBCard, MDBCardBody, MDBCardHeader, MDBIcon, MDBRow, MDBTable, MDBTableBody, MDBTableHead,} from 'mdbreact';
 
 //exports clicked row data
 export let clickedTR = {
@@ -9,7 +9,6 @@ export let clickedTR = {
 
 class RecentUploads extends Component {
   state = {};
-  // interval;
 
   //useful for setting initial state
   constructor(props) {
@@ -18,12 +17,31 @@ class RecentUploads extends Component {
     this.state = { quarter: ''};
   }
 
-
-
   //use api endpoint to get recent uploads, setting state
-  getRecentUploads = () => {
+  getRecentUploads = (quarter) => {
     // array to hold both types of files
     var recentUploads = [];
+    //arrays to hold quarters
+    var fall = [];
+    var winter = [];
+    var spring = [];
+    var summer = [];
+    //sort files by quarter
+    function sortQuarter(file) {
+      if (file.quarter === 'Fall') {
+        fall.push(file);
+      }
+      else if (file.quarter === 'Winter') {
+        winter.push(file);
+      }
+      else if (file.quarter === 'Spring') {
+        spring.push(file);
+      }
+      else {
+        summer.push(file);
+      }
+    }
+    // format date
     function formatDate(file) {
       let date = new Date(file.date);
       let month = date.getMonth() + 1;
@@ -35,6 +53,7 @@ class RecentUploads extends Component {
     api.fetchProficiencyUploads().then(recentProciency => {
       recentProciency.map(function(file) {
         formatDate(file);
+        sortQuarter(file);
         recentUploads.push(file);
       })
     });
@@ -42,22 +61,30 @@ class RecentUploads extends Component {
     api.fetchRecentUploads().then(recentUp => {
       recentUp.map(function(file) {
         formatDate(file);
+        sortQuarter(file);
         recentUploads.push(file);
       });
-
       //sort all uploaded files by date
       recentUploads = recentUploads.slice().sort((a, b) => b.date - a.date);
-
+      // change table based on quarter
+      if (quarter === 'Fall') {
+        recentUploads = fall;
+      }
+      if (quarter === 'Winter') {
+        recentUploads = winter;
+      }
+      if (quarter === 'Spring') {
+        recentUploads = spring;
+      }
+      if (quarter === 'Summer') {
+        recentUploads = summer;
+      }
       this.setState({recentUploads});
     });
   };
 
   componentDidMount() {
-    this.interval = setInterval(this.getRecentUploads.bind(this), 5000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
+    this.getRecentUploads.bind(this);
   }
 
   showRow(file) {
@@ -72,14 +99,10 @@ class RecentUploads extends Component {
     };
   }
 
-  quarterHandler = (quarter) => {
-    this.setState({quarter});
-  };
-
   render() {
 
     const quarterChange = (e) => {
-      this.quarterHandler(e.target.value);
+      this.getRecentUploads(e.target.value);
     };
 
     return (
@@ -99,6 +122,13 @@ class RecentUploads extends Component {
           </MDBCardHeader>
           <MDBCardBody id="cardTable">
             <MDBTable scrollY maxHeight="250px" id="table">
+              <MDBTableHead >
+                <tr>
+                  <th>File</th>
+                  <th>Quarter</th>
+                  <th>Date</th>
+                </tr>
+              </MDBTableHead>
               <MDBTableBody>
                 {
                   this.state.recentUploads ?
@@ -107,6 +137,9 @@ class RecentUploads extends Component {
                             <td>
                               <MDBIcon icon="check" className="mr-3 text-success"/>
                               {recentUpload.filename}
+                            </td>
+                            <td>
+                              {recentUpload.quarter}
                             </td>
                             <td>
                               {recentUpload.date}
