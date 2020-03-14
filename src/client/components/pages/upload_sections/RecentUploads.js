@@ -1,12 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import * as api from '../../../api';
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardHeader,
-  MDBIcon, MDBRow,
-  MDBTableBody,
-} from 'mdbreact';
+import {MDBCard, MDBCardBody, MDBCardHeader, MDBIcon, MDBRow, MDBTable, MDBTableBody,} from 'mdbreact';
 
 //exports clicked row data
 export let clickedTR = {
@@ -24,32 +18,36 @@ class RecentUploads extends Component {
     this.state = { quarter: ''};
   }
 
+
+
   //use api endpoint to get recent uploads, setting state
   getRecentUploads = () => {
+    // array to hold both types of files
     var recentUploads = [];
+    function formatDate(file) {
+      let date = new Date(file.date);
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      let year = date.getFullYear();
+      file.date = month + "/" + day + "/" + year;
+    }
+    // get proficiency data files
     api.fetchProficiencyUploads().then(recentProciency => {
       recentProciency.map(function(file) {
-        let date = new Date(file.date);
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let year = date.getFullYear();
-        file.date = month + "/" + day + "/" + year;
+        formatDate(file);
         recentUploads.push(file);
-        console.log("prof file: " + file.date);
       })
     });
+    // get lab hour files
     api.fetchRecentUploads().then(recentUp => {
       recentUp.map(function(file) {
-        let date = new Date(file.date);
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let year = date.getFullYear();
-        file.date = month + "/" + day + "/" + year;
+        formatDate(file);
         recentUploads.push(file);
-        console.log("recent file: " + file.date);
       });
 
-      console.log("Uploads: " + recentUploads);
+      //sort all uploaded files by date
+      recentUploads = recentUploads.slice().sort((a, b) => b.date - a.date);
+
       this.setState({recentUploads});
     });
   };
@@ -100,7 +98,7 @@ class RecentUploads extends Component {
 
           </MDBCardHeader>
           <MDBCardBody id="cardTable">
-            <table className="table table-wrapper-scroll-y my-custom-scrollbar" id="table">
+            <MDBTable scrollY maxHeight="250px" id="table">
               <MDBTableBody>
                 {
                   this.state.recentUploads ?
@@ -117,7 +115,7 @@ class RecentUploads extends Component {
                       : console.log('wait')
                 }
               </MDBTableBody>
-            </table>
+            </MDBTable>
           </MDBCardBody>
         </MDBCard>
     );
