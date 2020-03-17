@@ -12,7 +12,7 @@ const TopNavigation = () => {
             </h1>
 
             <MDBListGroup className="list-group-flush">
-                <NavLink exact={true} to="/" activeClassName="activeClass">
+                <NavLink exact={true} to="/dashboard" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1 text-elegant">
                         <p className="text-center">
                             <MDBIcon icon="chart-pie" className="mb-2" size="lg"/>
@@ -21,19 +21,19 @@ const TopNavigation = () => {
 
                     </MDBListGroupItem>
                 </NavLink>
-                <NavLink to="/profile" activeClassName="activeClass">
-                    <MDBListGroupItem className="pb-1 text-elegant">
-                        <p className="text-center">
-                            <MDBIcon icon="user" className="mb-2" size="lg"/>
-                            <small className="font-weight-light">Profile</small>
-                        </p>
-                    </MDBListGroupItem>
-                </NavLink>
                 <NavLink to="/uploads" activeClassName="activeClass">
                     <MDBListGroupItem className="pb-1 text-elegant">
                         <p className="text-center">
                             <MDBIcon icon="cloud-upload-alt" className="mb-2" size="lg"/>
                             <small className="font-weight-light">Uploads</small>
+                        </p>
+                    </MDBListGroupItem>
+                </NavLink>
+                <NavLink to="/users" activeClassName="activeClass">
+                    <MDBListGroupItem className="pb-1 text-elegant">
+                        <p className="text-center">
+                            <MDBIcon icon="users" className="mb-2" size="lg"/>
+                            <small className="font-weight-light"> Users </small>
                         </p>
                     </MDBListGroupItem>
                 </NavLink>

@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 //connect to mongo w mongoose
-
 // mongoose.connect('mongodb://localhost:27017/LLTest', {useNewUrlParser: true});
 mongoose.connect('mongodb://Boolean:Hooligans1@ds023442.mlab.com:23442/heroku_8tbqhjvr', {useNewUrlParser: true});
 
@@ -14,22 +15,18 @@ db.once('open', function() {
 //create upload schema
 let uploadSchema = new mongoose.Schema({
   filename: String,
-  // data: Array,
   quarter: String,
   year: String,
   language: String,
+  staffing: String,
   data: [
     {
-      // id: String,
-      first_name: String,
-      last_name: String,
-      hours: String,
+      sid: String,
+      // first_name: String,
+      // last_name: String,
+      hours: Number,
       currentClass: String,
-      language: String,
-      reading: Number,
-      writing: Number,
-      listening: Number,
-      speaking: Number
+      language: String
     }
   ],
   date: { type: Date, default: Date.now },
@@ -42,8 +39,8 @@ let proficiencySchema = new mongoose.Schema({
   data: [
     {
       sid: String,
-      first_name: String,
-      last_name: String,
+      // first_name: String,
+      // last_name: String,
       speaking: Number,
       listening: Number,
       reading: Number,
@@ -54,8 +51,31 @@ let proficiencySchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-//create upload model w schema and collection
+let userSchema = new mongoose.Schema({
+  email: String,
+  password: String
+});
+
+//before save - hash password
+userSchema.pre('save', function(next) {
+  //check if document is new or a new password has been set
+  if (this.isNew || this.isModified('password')) {
+    //save reference to this because of changing scopes
+    const document = this;
+
+    //hash the password
+    bcrypt.hash(document.password, saltRounds, function(err, hashedPassword) {
+      if (err) next(err);
+      else {
+        document.password = hashedPassword;
+        next();
+      }
+    });
+  }
+  else next();
+});
+
+//export models
 export const UploadModel = mongoose.model('Test', uploadSchema, 'TestData');
 export const ProficiencyModel = mongoose.model('Proficiency', proficiencySchema, 'ProficiencyData');
-
-// export default UploadModel;
+export const UserModel = mongoose.model('Users', userSchema, 'Users');

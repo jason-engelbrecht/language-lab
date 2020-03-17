@@ -1,25 +1,35 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
+import fs from 'fs';
 import excelToJson from 'convert-excel-to-json';
-import {UploadModel, ProficiencyModel} from './src/server/database';
+import {ProficiencyModel, UploadModel} from './src/server/database';
 import router from './src/server/api';
+import crypto from 'crypto';
+
 const path = require('path');
 const server = express();
-import fs from 'fs';
 
 //serve public files statically and enable file uploads on server
 server.use(express.static('public'), fileUpload());
+
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+server.use(cookieParser());
 
 //bring in the api router
 server.use('/api', router);
 
 //base routes
-server.get(['/', '/uploads', '/profile'], (req, res) => {
+server.get(['/', '/dashboard', '/uploads', '/users', '/login', '/register'], (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 //maybe move to api
 server.post('/upload/lab', (req, res) => {
+
+    // console.log("crypto1: " + hash.update('123456789'));
+    // console.log("crypto2: " + hash.update('123456789'));
     if(req.files === null) {
         return res.status(400).json({ msg: "No file uploaded" });
     }
@@ -32,8 +42,8 @@ server.post('/upload/lab', (req, res) => {
     if(req.body.language) {
         language = req.body.language;
     }
-    if(req.body.staffing) {
-        staffing = req.body.staffing;
+    if(req.body.support) {
+        staffing = req.body.support;
     }
     let file = req.files.file;
 
@@ -70,10 +80,11 @@ server.post('/upload/lab', (req, res) => {
                 // '*': '{{columnHeader}}'
                 'B': '{{B1}}',
                 'C': '{{C1}}',
-                'E': '{{E1}}'
+                'D': '{{D1}}',
+                'F': '{{F1}}'
             },
             // TODO: make sheet names consistent from quarter to quarter and adjust this
-            sheets: ['Spring 2018 Lab Usage Summary']
+            sheets: ['Language Lab Usage Summary']
         });
 
         // console.log("sheet2: " + result[sheet2]);
@@ -91,13 +102,18 @@ server.post('/upload/lab', (req, res) => {
 
         for (let i = 0; i < studentData.length; i++) {
             // ignore empty rows
-            if(studentData[i]['Student First Name']) {
+            if(studentData[i]['Student ID#']) {
                 // add new property names for mongoDB
-                studentData[i].id = studentData[i]['Student First Name'] + "-" + studentData[i]['Student Last Name'];
-                studentData[i].first_name = studentData[i]['Student First Name'];
-                studentData[i].last_name = studentData[i]['Student Last Name'];
+
+                const hash = crypto.createHash('SHA3-512');
+                const sid = studentData[i]['Student ID#'].toString().trim();
+                hash.update(sid);
+                studentData[i].sid = hash.digest('hex');
+                // studentData[i].first_name = studentData[i]['Student First Name'];
+                // studentData[i].last_name = studentData[i]['Student Last Name'];
                 studentData[i].hours = studentData[i]['Hours in the Lab'];
                 // remove the old property names
+                delete studentData[i]['Student ID#'];
                 delete studentData[i]['Student First Name'];
                 delete studentData[i]['Student Last Name'];
                 delete studentData[i]['Hours in the Lab'];
@@ -123,7 +139,7 @@ server.post('/upload/lab', (req, res) => {
             await upload.save().then(() => console.log('uploaded...meow'));
             // query the db for the data just uploaded
             let q = UploadModel.find().sort({'date' : -1}).limit(1);
-            q.exec(function(error, doc) {
+            q.exec(function(err, doc) {
                 // get array of all "students"
                 // let data = doc[0].data;
                 // for (let i = 0; i < data.length; i++) {
@@ -161,6 +177,7 @@ server.post('/upload/lab', (req, res) => {
 
 //maybe move to api
 server.post('/upload/proficiency', (req, res) => {
+
     if(req.files === null) {
         return res.status(400).json({ msg: "No file uploaded" });
     }
@@ -199,7 +216,7 @@ server.post('/upload/proficiency', (req, res) => {
                     // ClassID, ItemNumber?, CourseID (level)
                     name: 'dbo.Class Dummy Data',
                     columnToKey: {
-                        'B': '{{B1}}',
+                        // 'B': '{{B1}}',
                         'C': '{{C1}}',
                         'D': '{{D1}}'
                     },
@@ -207,17 +224,6 @@ server.post('/upload/proficiency', (req, res) => {
                         rows: 1
                     }
                 },
-                // {
-                //     // ClassID, SID
-                //     name: 'dbo.Enrollment Dummy Data',
-                //     columnToKey: {
-                //         'B': '{{B1}}',
-                //         'C': '{{C1}}'
-                //     },
-                //     header: {
-                //         rows: 1
-                //     }
-                // },
                 {
                     // SID, FullName
                     name: 'dbo.Student',
@@ -273,24 +279,27 @@ server.post('/upload/proficiency', (req, res) => {
         for(let item in actfl) {
             if(actfl.hasOwnProperty(item)) {
                 if(actfl[item]['SPEAKING'] && actfl[item]['SPEAKING'] !== '') {
-                    let thing = {};
-                    thing.language = actfl[item]['Language'];
-                    thing.itemNumber = actfl[item]['ItemNumber'];
-                    let sid = actfl[item]['SID'];
-                    thing.sid = sid;
-                    let student = students.find(student => student['SID'] === sid);
-                    let name = student['FullName'];
-                    let fullName = name.split(' ');
+                    let studentData = {};
+                    studentData.language = actfl[item]['Language'];
+                    studentData.itemNumber = actfl[item]['ItemNumber'];
+                    // encrypt SID
+                    const hash = crypto.createHash('SHA3-512');
+                    const sid = actfl[item]['SID'].toString().trim();
+                    hash.update(sid);
+                    studentData.sid = hash.digest('hex');
+                    // find the matching encrypted SID
+                    let student = students.find(student => student['SID'].toString().trim() === sid);
+                    // let name = student['FullName'];
+                    // let fullName = name.split(' ');
                     let currentClass = classDummy.
                                         find(level => level['ItemNumber'] === actfl[item]['ItemNumber']);
-                    thing.current_class = currentClass['CourseID'];
-                    thing.first_name = fullName[0];
-                    thing.last_name = fullName[1];
-                    thing.speaking = actfl[item]['SPEAKING'];
-                    thing.writing = actfl[item]['WRITING'];
-                    thing.listening = actfl[item]['LISTENING'];
-                    thing.reading = actfl[item]['READING'];
-                    scores.push(thing);
+                    studentData.current_class = currentClass['CourseID'];
+                    // studentData.first_name = fullName[0];
+                    studentData.speaking = actfl[item]['SPEAKING'];
+                    studentData.writing = actfl[item]['WRITING'];
+                    studentData.listening = actfl[item]['LISTENING'];
+                    studentData.reading = actfl[item]['READING'];
+                    scores.push(studentData);
                 }
             }
         }
@@ -310,7 +319,7 @@ server.post('/upload/proficiency', (req, res) => {
 
         //upload to db and meow
         async function showUploaded() {
-            await upload.save().then(() => console.log('uploaded...meow'));
+            await upload.save().then(() => console.log('uploaded...woof'));
             // query the db for the data just uploaded
             let q = UploadModel.find().sort({'date' : -1}).limit(1);
             q.exec(function(error, doc) {
