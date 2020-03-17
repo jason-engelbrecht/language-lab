@@ -79,11 +79,6 @@ main {
     margin-left: 80px;
 }
 
-.login-content {
-    height: 1000px!important;
-    padding-top: 100px;
-}
-
 .list-group-item {
     transition: background-color 0.3s;
 }
