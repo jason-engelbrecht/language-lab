@@ -38,9 +38,9 @@ class Routes extends React.Component {
           <Login/>
         </Route>
 
-        <Route path='/register' exact>
-          <Register/>
-        </Route>
+        {/*<Route path='/register' exact>*/}
+        {/*  <Register/>*/}
+        {/*</Route>*/}
 
         <Route path='/dashboard' exact>
           {this.renderNavWith(withAuth(DashboardPage))}

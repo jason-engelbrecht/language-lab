@@ -49,6 +49,22 @@ export const findUser = (email, password) => {
   }).then(res => res)
 };
 
+export const getUsers = () => {
+  return axios.get('/api/users').then(res => res);
+};
+
 export const checkToken = () => {
   return axios.get(`/api/checkToken`).then(res => res)
+};
+
+export const logout = () => {
+  return axios.post('/api/logout').then(res => {
+    console.log(res);
+  })
+};
+
+export const deleteUser = (email) => {
+  return axios.delete(`/api/deleteUser/${email}`).then(res => {
+    console.log("delete result: " + res);
+  })
 };

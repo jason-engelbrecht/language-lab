@@ -5,21 +5,38 @@ import './Login.css';
 
 class Login extends Component {
   state = {
-    redirect: false
+    redirect: false,
+    email: '',
+    password: '',
+  };
+
+  emailChange = (e) => {
+    e.preventDefault();
+    this.setState({email: e.target.value});
+  };
+  pwChange = (e) => {
+    e.preventDefault();
+    this.setState({password: e.target.value});
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const email = this.refs.email.value;
-    const password = this.refs.password.value;
+    // const email = this.refs.email.value;
+    const email = this.state.email;
+    const password = this.state.password;
+    // const password = this.refs.password.value;
 
     //check in db for match
     if(email && password) {
       api.findUser(email, password).then(res => {
         //successful response - redirect
-        if(res.status === 200) this.setState({ redirect: true });
-        else throw new Error(res.error);
+        if(res.status === 200) {
+          this.setState({ redirect: true });
+        }
+        else {
+          throw new Error(res.error);
+        }
       })
       .catch(err => {
         console.error(err);
@@ -28,11 +45,14 @@ class Login extends Component {
     }
   };
 
+
   render() {
     if(this.state.redirect) {
       return ( <Redirect to={{ pathname: "/dashboard" }} /> );
-    }
-    else {
+    } else {
+      // logout if already logged in
+      api.logout();
+
       return (
         <div className="login-content">
           <div className="container">
@@ -46,8 +66,9 @@ class Login extends Component {
                   <input type="email"
                          id="email"
                          className="form-control"
-                         ref="email"
-                         autoComplete="email"/>
+                         name="email"
+                         autoComplete="email"
+                         onChange={this.emailChange}/>
                   <label htmlFor="email">Email</label>
                 </div>
 
@@ -55,16 +76,17 @@ class Login extends Component {
                   <input type="password"
                          id="password"
                          className="form-control"
-                         ref="password"
-                         autoComplete="current-password"/>
+                         name="password"
+                         autoComplete="current-password"
+                         onChange={this.pwChange}/>
                   <label htmlFor="password">Password</label>
                 </div>
 
                 <button className="btn btn-outline-success btn-block my-5" type="submit">Sign in</button>
 
-                <h6 className="text-center">
-                  <Link to={'/register'} className="text-dark"><i className="fas fa-plus fa-sm"/> Register</Link>
-                </h6>
+                {/*<h6 className="text-center">*/}
+                {/*  <Link to={'/register'} className="text-dark"><i className="fas fa-plus fa-sm"/> Register</Link>*/}
+                {/*</h6>*/}
 
               </form>
             </div>

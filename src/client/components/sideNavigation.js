@@ -18,7 +18,6 @@ const TopNavigation = () => {
                             <MDBIcon icon="chart-pie" className="mb-2" size="lg"/>
                             <small className="font-weight-light">Home</small>
                         </p>
-
                     </MDBListGroupItem>
                 </NavLink>
                 <NavLink to="/uploads" activeClassName="activeClass">
@@ -33,7 +32,15 @@ const TopNavigation = () => {
                     <MDBListGroupItem className="pb-1 text-elegant">
                         <p className="text-center">
                             <MDBIcon icon="users" className="mb-2" size="lg"/>
-                            <small className="font-weight-light"> Users </small>
+                            <small className="font-weight-light">Users</small>
+                        </p>
+                    </MDBListGroupItem>
+                </NavLink>
+                <NavLink to="/login" activeClassName="activeClass">
+                    <MDBListGroupItem className="pb-1 text-elegant">
+                        <p className="text-center">
+                            <MDBIcon icon="arrow" className="mb-2" size="lg"/>
+                            <small className="font-weight-light">Logout</small>
                         </p>
                     </MDBListGroupItem>
                 </NavLink>
