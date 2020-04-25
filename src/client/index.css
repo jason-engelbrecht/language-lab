@@ -6,6 +6,10 @@ table#table {
     cursor: pointer;
 }
 
+html, body {
+    height: 100%;
+}
+
 body{
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -15,6 +19,8 @@ body{
     color: #212529;
     text-align: left;
     background-color: #EDEDEE;
+    display: flex;
+    flex-direction: column;
 }
 
 .empty {
@@ -55,7 +61,6 @@ main {
     background-color: #43A047 !important;
 }
 
-
 .sidebar-fixed {
     left: 0;
     top: 0;
@@ -77,6 +82,8 @@ main {
 
 #content{
     margin-left: 80px;
+    min-height: 86.8vh!important;
+    flex: 1 0 auto;
 }
 
 .list-group-item {
