@@ -5,15 +5,6 @@ const AdminCardSection1 = (props) => {
     let labData = props.labData;
     let profData = props.profData;
     var language = props.language;
-    // for (let prop in labData) {
-    //     console.log(prop + ": " + props.labData[prop].length);
-    // }
-    // for (let prop in profData) {
-    //     console.log(prop + ": " + profData[prop].length);
-    // }
-    // if(profData['data']) {
-    //     console.log("count: " + profData['data'].length);
-    // }
 
     if(labData && profData && profData.hasOwnProperty('data')) {
 
@@ -36,20 +27,23 @@ const AdminCardSection1 = (props) => {
         }
 
         var labStudents = [];
-        // for(let prop in labData) {
-        //     labStudents.push(labData[prop]);
-        // }
         for (let i = 0; i < labData.length; i++) {
             labStudents.push(labData[i]);
         }
 
-        console.log("length: " + labStudents.length);
 
         var hoursGTFive = 0;
         var totalHours = 0;
+        let japanese = false;
+        if(language === "Japanese") {
+            japanese = true;
+        }
         for (let i = 0; i < students.length; i++) {
             for (let j = 0; j < labStudents.length; j++) {
                 if(students[i].sid === labStudents[j].sid) {
+                    if(japanese) {
+                        console.log("hours: " + labStudents[j].hours)
+                    }
                     students[i].hours = labStudents[j].hours;
                 }
 
@@ -62,6 +56,7 @@ const AdminCardSection1 = (props) => {
             }
         }
 
+        console.log("language: " + language + " => " + totalHours);
 
         return (
             <MDBRow className="mb-4">

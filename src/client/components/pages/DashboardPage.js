@@ -14,46 +14,28 @@ const DashboardPage = () => {
     const [germanLab, setGerman] = useState([]);
     const [frenchLab, setFrench] = useState([]);
     const [japaneseLab, setJapanese] = useState([]);
-    const [currentLang, setLang] = useState('all');
+    const [currentLang, setLang] = useState("all");
     const [langData, setLangData] = useState([]);
+    const [languagesUploaded, setLanguagesUploaded] = useState([]);
 
 
     useEffect( () => {
+        // idea from dev.to Yurui Zhang
+        let isCancelled = false;
+
         if(dataYear === '' || dataQuarter === '') {
             getLastQuarter();
         }
         if(langData.length === 0) {
             setLangData(labData);
         }
-        //     getLastData();
+
+        // "clean up statement" => not exactly sure how it works...
+        return() => isCancelled = true;
     });
 
-    // const getLastData = async () => {
-    //     await getLastLab();
-    //     await getLastProf();
-    // };
-
-    // const getLastLab = () => {
-    //     api.fetchLabData(dataQuarter, dataYear).then(lastLab => {
-    //         for(let prop in lastLab) {
-    //             console.log(lastLab);
-    //         }
-    //         console.log('test');
-    //         setLab(lastLab[0]);
-    //         // console.log("lastLab[0]: " + lastLab[0]);
-    //         // console.log("labData: " + labData);
-    //     })
-    // };
-    //
-    // const getLastProf = () => {
-    //     api.fetchProfData(dataQuarter, dataYear).then(lastProf => {
-    //         setProf(lastProf[0]);
-    //         // console.log("lastProf[0]: " + lastProf[0]);
-    //         // console.log("profData: " + profData);
-    //     })
-    // };
-
-    // TODO: attempt to pass data up from child using callback function
+    // TODO: needs a useEffect cleanup function? -- confirm behavior of "isCancelled" in useEffect()
+    // pass data up from child using callback function
     const getLanguage = (languageSelected) => {
         console.log("dashboard lang: " + languageSelected);
         setLang(languageSelected);
@@ -84,10 +66,20 @@ const DashboardPage = () => {
         // console.log("aftery: " + dataYear);
     };
 
-    // get all the data matching the most recent year
-    const getRecentData = (e) => {
+    // get all the data matching the quarter and year from the form
+    const getSelectedData = (e) => {
+        // reset data so that it doesn't load old data after quarter/year change
+        setChinese([]);
+        setFrench([]);
+        setGerman([]);
+        setJapanese([]);
+        setSpanish([]);
+        setLab([]);
+        setProf([]);
+        setLang("all");
+
         e.preventDefault();
-        api.fetchLabData(dataQuarter, dataYear).then(recentData => {
+        api.fetchLabData(dataQuarter, dataYear).then(selectedData => {
             var allStudents = [];
             var chineseStudents = [];
             var frenchStudents = [];
@@ -95,23 +87,23 @@ const DashboardPage = () => {
             var japaneseStudents = [];
             var spanishStudents = [];
 
-            for(let prop in recentData) {
-                if(recentData.hasOwnProperty(prop)) {
-                    for (let student in recentData[prop]['data']) {
-                        if(recentData[prop]['data'].hasOwnProperty(student)) {
-                            if (recentData[prop]['language'] === 'Chinese') {
-                                chineseStudents.push(recentData[prop]['data'][student]);
-                            } else if (recentData[prop]['language'] === 'French') {
-                                frenchStudents.push(recentData[prop]['data'][student]);
-                            } else if (recentData[prop]['language'] === 'German') {
-                                germanStudents.push(recentData[prop]['data'][student]);
-                            } else if (recentData[prop]['language'] === 'Japanese') {
-                                japaneseStudents.push(recentData[prop]['data'][student]);
-                            } else if (recentData[prop]['language'] === 'Spanish') {
-                                spanishStudents.push(recentData[prop]['data'][student]);
+            for(let prop in selectedData) {
+                if(selectedData.hasOwnProperty(prop)) {
+                    for (let student in selectedData[prop]['data']) {
+                        if(selectedData[prop]['data'].hasOwnProperty(student)) {
+                            if (selectedData[prop]['language'] === 'Chinese') {
+                                chineseStudents.push(selectedData[prop]['data'][student]);
+                            } else if (selectedData[prop]['language'] === 'French') {
+                                frenchStudents.push(selectedData[prop]['data'][student]);
+                            } else if (selectedData[prop]['language'] === 'German') {
+                                germanStudents.push(selectedData[prop]['data'][student]);
+                            } else if (selectedData[prop]['language'] === 'Japanese') {
+                                japaneseStudents.push(selectedData[prop]['data'][student]);
+                            } else if (selectedData[prop]['language'] === 'Spanish') {
+                                spanishStudents.push(selectedData[prop]['data'][student]);
                             }
-                            console.log("Student: " + recentData[prop]['data'][student]);
-                            allStudents.push(recentData[prop]['data'][student]);
+                            console.log("Student: " + selectedData[prop]['data'][student]);
+                            allStudents.push(selectedData[prop]['data'][student]);
                         }
                     }
                 }
@@ -122,6 +114,26 @@ const DashboardPage = () => {
             setJapanese(japaneseStudents);
             setSpanish(spanishStudents);
             setLab(allStudents);
+
+            // create list of languages that actually have data
+            let languageList = [];
+            if(chineseStudents.length > 0) {
+                languageList.push("Chinese");
+            }
+            if(frenchStudents.length > 0) {
+                languageList.push("French");
+            }
+            if(germanStudents.length > 0) {
+                languageList.push("German");
+            }
+            if(japaneseStudents.length > 0) {
+                languageList.push("Japanese");
+            }
+            if(spanishStudents.length > 0) {
+                languageList.push("Spanish");
+            }
+            setLanguagesUploaded(languageList);
+
         });
         // console.log("lab: " + labData);
         api.fetchProfData(dataQuarter, dataYear).then(recentData => {
@@ -163,12 +175,12 @@ const DashboardPage = () => {
                             </select>
                             <label htmlFor="year">Year</label>
                             <input type="text" className="form-control" id="year" placeholder={dataYear} onChange={changeYear} defaultValue={dataYear}/>
-                            <button onClick={getRecentData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
+                            <button onClick={getSelectedData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
                         </div>
                     </div>
                 </div>
 
-                <ReportLanguageSelect languageHandler={getLanguage}/>
+                <ReportLanguageSelect languageHandler={getLanguage} languagesUploaded={languagesUploaded}/>
 
 
                 <AdminCardSection1 labData={langData} profData={profData} language={currentLang}/>
@@ -197,11 +209,11 @@ const DashboardPage = () => {
                             </select>
                             <label htmlFor="year">Year</label>
                             <input type="text" className="form-control" id="year" placeholder={dataYear} onChange={changeYear} defaultValue={dataYear}/>
-                            <button onClick={getRecentData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
+                            <button onClick={getSelectedData} className={'btn btn-primary'}>Load {dataQuarter} {dataYear}</button>
                         </div>
                     </div>
                 </div>
-                <div className="empty" id="dash"> </div>
+                <div className="" id=""> </div>
             </React.Fragment>
         )
     }
