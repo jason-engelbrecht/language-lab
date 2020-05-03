@@ -25,6 +25,12 @@ export const fetchRecentTRData = (id) => {
       .then(resp => resp.data.recentdata);
 };
 
+//delete clicked table row data from api
+export const deleteRecentTRData = (id) => {
+  return axios.get(`/api/deletetrdata/${id}`)
+      .then(resp => resp.data.recentdata);
+};
+
 export const fetchLabData = (quarter, year) => {
   return axios.get(`/api/lab/${quarter}/${year}`)
       .then(res => res.data.quarterData)

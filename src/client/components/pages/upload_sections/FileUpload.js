@@ -65,6 +65,7 @@ const FileUpload = (props) => {
                 setFilename('');
             }, 10000);
             console.log(res.data);
+            window.location.reload(false);
         } catch(err) {
             setMsgType('danger');
             if(err.response.status === 500) {

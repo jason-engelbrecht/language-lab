@@ -277,6 +277,11 @@ main {
     display: block;
 }
 
+.selected {
+    /*background-color: lightgreen;*/
+    outline: lightgreen solid 1px ;
+}
+
 .empty#dash {
     height: 290px;
 }
@@ -287,3 +292,10 @@ main {
 }
 
 
+th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #66bb6a !important;
+}

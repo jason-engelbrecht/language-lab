@@ -21,10 +21,8 @@ class UploadPreview extends Component {
     getRecentTRData = () => {
         if (clickedTR.clickedFile !== '') {
             api.fetchRecentTRData(clickedTR.clickedFile).then(recentData => {
-                // console.log("Recent: " + recentData[0].data);
                 recentData = recentData[0].data;
                 this.setState({recentData});
-                console.log("clicked: " + clickedTR);
             });
         }
     };
