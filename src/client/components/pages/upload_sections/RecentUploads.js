@@ -128,8 +128,8 @@ class RecentUploads extends Component {
                   <div className='custom-ui'>
                       <h2>Are you sure you want to delete this file?</h2>
                       <div className="flex-center">
-                          <MDBBtn onClick={onClose}>No</MDBBtn>
-                          <MDBBtn
+                          <MDBBtn color="red" onClick={onClose}>No</MDBBtn>
+                          <MDBBtn color="green"
                               onClick={() => {
                                   console.log("file: " + file._id);
                                   api.deleteRecentTRData(file._id).then(result => {
