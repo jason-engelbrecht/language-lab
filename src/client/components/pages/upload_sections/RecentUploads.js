@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import * as api from '../../../api';
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardHeader,
-  MDBIcon,
-  MDBRow,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBIcon,
+    MDBRow,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead,
 } from 'mdbreact';
 
 //exports clicked row data
 export let clickedTR = {
-  clickedFile: ""
+  clickedFile: ''
 };
 
 class RecentUploads extends Component {
@@ -25,8 +28,6 @@ class RecentUploads extends Component {
     this.getRecentUploads();
     this.state = {
       quarter: '',
-      // modal13: false,
-      // file: ''
     };
   }
 
@@ -94,17 +95,14 @@ class RecentUploads extends Component {
     // this.interval = setInterval(this.getRecentUploads.bind(this), 500);
   }
 
-  showRow(file) {
-    // //shows table once a row is clicked
-    // var NAME = document.getElementById("hide");
-    // NAME.className="show";
-    //
-    // //sends data from row clicked to table
-    // let id = file._id;
-    // this.setState({file: this.state.file = id});
-    // clickedTR = {
-    //   clickedFile: {file}
-    // };
+  showRow(e) {
+    //sends data from row clicked to table
+    let id = e._id;
+    console.log("id: " + id)
+    // this.setState({file: id});
+    clickedTR = {
+      clickedFile: id
+    };
 
     //shows/hides table once a row is clicked
     var NAME = document.getElementById("hide");
@@ -115,36 +113,38 @@ class RecentUploads extends Component {
     }
 
     //highlight/hides selected row
-    var ROW = document.getElementById(file._id);
+    var ROW = document.getElementById(e._id);
     if (ROW.className === "selected") {
       ROW.className = null;
     } else {
       ROW.className = "selected";
     }
-
-    //sends data from row clicked to table
-    let id = file._id;
-    clickedTR = {
-      clickedFile: id
-    };
-
-
   }
 
-  // toggle = nr => (file) => {
-  //   let modalNumber = 'modal' + nr
-  //   let id = file._id;
-  //   this.setState({
-  //     file: id,
-  //     [modalNumber]: !this.state[modalNumber]
-  //   });
-  // }
-
   deleteFile(file) {
-    console.log("file: " + file._id);
-    api.deleteRecentTRData(file._id).then(result => {
-      console.log(result)});
-    window.location.reload(false);
+      confirmAlert({
+          customUI: ({ onClose }) => {
+              return (
+                  <div className='custom-ui'>
+                      <h2>Are you sure you want to delete this file?</h2>
+                      <div className="flex-center">
+                          <MDBBtn onClick={onClose}>No</MDBBtn>
+                          <MDBBtn
+                              onClick={() => {
+                                  console.log("file: " + file._id);
+                                  api.deleteRecentTRData(file._id).then(result => {
+                                      console.log(result)});
+                                  window.location.reload(false);
+                                  onClose();
+                              }}
+                          >
+                              Yes, Delete it!
+                          </MDBBtn>
+                      </div>
+                  </div>
+              );
+          }
+      });
   }
 
   render() {
@@ -153,7 +153,6 @@ class RecentUploads extends Component {
     };
 
     return (
-
         <MDBCard className="flex-fill">
           <MDBCardHeader color="green">
             <MDBRow className="pr-1">
@@ -201,20 +200,6 @@ class RecentUploads extends Component {
               </MDBTableBody>
             </MDBTable>
           </MDBCardBody>
-          {/*modal*/}
-          {/*<MDBContainer>*/}
-          {/*  <MDBModal isOpen={this.state.modal13} toggle={this.toggle(13)} centered>*/}
-          {/*    <MDBModalHeader toggle={this.toggle(13)}>Delete</MDBModalHeader>*/}
-          {/*    <MDBModalBody>*/}
-          {/*      Are you sure you want to delete?*/}
-          {/*    </MDBModalBody>*/}
-          {/*    <MDBModalFooter>*/}
-          {/*      <MDBBtn color="secondary" onClick={this.toggle(13)}>Cancel</MDBBtn>*/}
-          {/*      <MDBBtn color="primary" onClick={this.deleteFile}>Delete</MDBBtn>*/}
-          {/*    </MDBModalFooter>*/}
-          {/*  </MDBModal>*/}
-          {/*</MDBContainer>*/}
-          {/*end modal*/}
         </MDBCard>
     );
   }
