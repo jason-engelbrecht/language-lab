@@ -278,8 +278,8 @@ main {
 }
 
 .selected {
-    /*background-color: lightgreen;*/
-    outline: lightgreen solid 1px ;
+    background-color: lightgray;
+    /*outline: limegreen solid 1px ;*/
 }
 
 .empty#dash {

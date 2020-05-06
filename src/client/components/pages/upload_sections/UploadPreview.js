@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     MDBCard,
     MDBCardBody,
@@ -49,34 +49,33 @@ class UploadPreview extends Component {
 
         return (
             <MDBCard className="hide" id="hide">
-            <MDBCardBody>
-            <MDBTable scrollY hover responsive>
-        <MDBTableHead color="green lighten-1">
-            <tr>
-            <th>#</th>
-            <th>First Name</th>
-        <th>Last Name</th>
-        <th>Hours</th>
-        </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-        {
-            this.state.recentData ?
-                this.state.recentData.map(info =>
-                <tr key={info._id}>
-                    <td>{info._id}</td>
-                    <td>{info.first_name}</td>
-                    <td>{info.last_name}</td>
-                    <td>{info.hours}</td>
-                    </tr>
-
-    ) : console.log("wait2")
-    }
-    </MDBTableBody>
-        </MDBTable>
-        </MDBCardBody>
-        </MDBCard>
-    );
+                <MDBCardBody>
+                    <MDBTable scrollY hover responsive>
+                        <MDBTableHead color="green lighten-1">
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Hours</th>
+                            </tr>
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {
+                                this.state.recentData ?
+                                    this.state.recentData.map(info =>
+                                        <tr key={info._id}>
+                                            <td>{info._id}</td>
+                                            <td>{info.first_name}</td>
+                                            <td>{info.last_name}</td>
+                                            <td>{info.hours}</td>
+                                        </tr>
+                                    ) : console.log("wait2")
+                            }
+                        </MDBTableBody>
+                    </MDBTable>
+                </MDBCardBody>
+            </MDBCard>
+        );
     }
 }
 
