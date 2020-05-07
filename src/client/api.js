@@ -20,10 +20,16 @@ export const fetchRecentData = () => {
 };
 
 //fetch clicked table row data from api
-export const fetchRecentTRData = (id) => {
-  return axios.get(`/api/recenttrdata/${id}`)
+export const fetchLabTRData = (id) => {
+  return axios.get(`/api/labtrdata/${id}`)
       .then(resp => resp.data.recentdata);
 };
+
+export const fetchProfTRData = (id) => {
+  return axios.get(`api/proftrdata/${id}`)
+      .then(res => res.data.recentdata);
+};
+
 
 //delete clicked table row data from api
 export const deleteRecentTRData = (id) => {

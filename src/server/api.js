@@ -36,16 +36,46 @@ router.get('/recentdata', withAuth, (req, res) => {
     });
 });
 
+// check if data exists
+router.get('/proficiency/:id', withAuth, (req, res) => {
+    ProficiencyModel.findOne({_id: req.params._id}).exec((err, result) => {
+        if(err) console.log("findOne proficiency file failure");
+        res.send(result);
+    })
+});
+
+router.get('/lab/:id', withAuth, (req, res) => {
+    UploadModel.findOne({_id: req.params._id}).exec((err, result) => {
+        if(err) console.log("findOne proficiency file failure");
+        res.send(result);
+    })
+});
+
+
 //gets data from clicked row
-router.get('/recenttrdata/:id', withAuth, (req, res) => {
+router.get('/labtrdata/:id', withAuth, (req, res) => {
     var clickedData = req.params.id;
 
     //finds clicked row by row object id
-    UploadModel.find({_id: clickedData}).select('data').sort({'date': -1}).limit(1).exec((err, recentdata) => {
+    UploadModel.find({_id: clickedData}).select('quarter year language staffing data').sort({'date': -1}).limit(1).exec((err, recentdata) => {
+    // UploadModel.findOne({_id: clickedData}).exec((err, recentdata) => {
         if (err) console.log('failure');
         res.send({recentdata});
     });
 });
+
+router.get('/proftrdata/:id', withAuth, (req, res) => {
+    var clickedData = req.params.id;
+
+    //finds clicked row by row object id
+    ProficiencyModel.find({_id: clickedData}).select('quarter year data').sort({'date': -1}).limit(1).exec((err, recentdata) => {
+    // ProficiencyModel.findOne({_id: clickedData}).exec((err, recentdata) => {
+        if (err) console.log('failure');
+        res.send({recentdata});
+    });
+});
+
+
 
 //deletes data from clicked row
 router.get('/deletetrdata/:id', withAuth, (req, res) => {

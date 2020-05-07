@@ -46,25 +46,25 @@ class RecentUploads extends Component {
         // array to hold both types of files
         var recentUploads = [];
         //arrays to hold quarters
-        var fall = [];
-        var winter = [];
-        var spring = [];
+        // var fall = [];
+        // var winter = [];
+        // var spring = [];
 
         //sort files by quarter
-        function sortQuarter(file) {
-            if (file.quarter === 'Fall') {
-                fall.push(file);
-            } else if (file.quarter === 'Winter') {
-                winter.push(file);
-            } else if (file.quarter === 'Spring') {
-                spring.push(file);
-            }
-        }
+        // function sortQuarter(file) {
+        //     if (file.quarter === 'Fall') {
+        //         fall.push(file);
+        //     } else if (file.quarter === 'Winter') {
+        //         winter.push(file);
+        //     } else if (file.quarter === 'Spring') {
+        //         spring.push(file);
+        //     }
+        // }
         // get proficiency data files
         api.fetchProficiencyUploads().then(recentProciency => {
             recentProciency.map(function (file) {
                 formatDate(file);
-                sortQuarter(file);
+                // sortQuarter(file);
                 recentUploads.push(file);
             })
         });
@@ -72,21 +72,23 @@ class RecentUploads extends Component {
         api.fetchRecentUploads().then(recentUp => {
             recentUp.map(function (file) {
                 formatDate(file);
-                sortQuarter(file);
+                // sortQuarter(file);
                 recentUploads.push(file);
             });
             //sort all uploaded files by date
-            recentUploads = recentUploads.slice().sort((a, b) => b.date - a.date);
+            // TODO: ask Vera what the .slice does (sorting didn't seem to work but maybe I missed something - Kaephas)
+            // recentUploads = recentUploads.slice().sort((a, b) => b.date - a.date);
+            recentUploads = recentUploads.sort((a, b) => b.date > a.date ? 1 : -1);
             // change table based on quarter
-            if (quarter === 'Fall') {
-                recentUploads = fall;
-            }
-            if (quarter === 'Winter') {
-                recentUploads = winter;
-            }
-            if (quarter === 'Spring') {
-                recentUploads = spring;
-            }
+            // if (quarter === 'Fall') {
+            //     recentUploads = fall;
+            // }
+            // if (quarter === 'Winter') {
+            //     recentUploads = winter;
+            // }
+            // if (quarter === 'Spring') {
+            //     recentUploads = spring;
+            // }
             this.setState({recentUploads});
         });
     };
@@ -101,7 +103,7 @@ class RecentUploads extends Component {
         this.state.recentUploads.map(row => {
             var ROW = document.getElementById(row._id);
             ROW.className = null;
-        })
+        });
 
         //sends data from row clicked to table
         let id = e._id;
@@ -161,12 +163,12 @@ class RecentUploads extends Component {
                     <MDBRow className="pr-1">
                         <h5 className="mb-1 mt-1 font-weight-normal col-8"><MDBIcon icon="list-ul" className="mr-2"/>Recent
                             Uploads</h5>
-                        <select className="custom-select browser-default col-3" onChange={quarterChange}>
-                            <option>Quarter</option>
-                            <option value="Fall">Fall</option>
-                            <option value="Winter">Winter</option>
-                            <option value="Spring">Spring</option>
-                        </select>
+                        {/*<select className="custom-select browser-default col-3" onChange={quarterChange}>*/}
+                        {/*    <option>Quarter</option>*/}
+                        {/*    <option value="Fall">Fall</option>*/}
+                        {/*    <option value="Winter">Winter</option>*/}
+                        {/*    <option value="Spring">Spring</option>*/}
+                        {/*</select>*/}
                     </MDBRow>
 
                 </MDBCardHeader>
@@ -200,7 +202,7 @@ class RecentUploads extends Component {
                                                          onClick={(event) => this.deleteFile(recentUpload)}/>
                                             </td>
                                         </tr>)
-                                    : console.log('wait')
+                                    : console.log('no recentUploads in state')
                             }
                         </MDBTableBody>
                     </MDBTable>
