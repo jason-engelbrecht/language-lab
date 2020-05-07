@@ -131,7 +131,7 @@ class RecentUploads extends Component {
             customUI: ({onClose}) => {
                 return (
                     <div className='custom-ui'>
-                        <h2>Are you sure you want to delete this file?</h2>
+                        <h2>Are you sure you want to delete: {(file.filename)}?</h2>
                         <div className="flex-center">
                             <MDBBtn color="red" onClick={onClose}>No</MDBBtn>
                             <MDBBtn color="green"
