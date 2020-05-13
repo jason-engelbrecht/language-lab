@@ -47,6 +47,9 @@ class TopNavigation extends Component {
                             <MDBNavItem>
                                 <MDBNavLink activeClassName="activeClass" className="pl-2" to='/users'>Users</MDBNavLink>
                             </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink activeClassName="activeClass" className="pl-2" to='/login'>Logout</MDBNavLink>
+                            </MDBNavItem>
                         </MDBNavbarNav>
                     </MDBCollapse>
                 </MDBNavbar>
